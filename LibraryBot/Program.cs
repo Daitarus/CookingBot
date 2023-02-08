@@ -1,10 +1,10 @@
-﻿namespace Library_bot
+﻿namespace LibraryBot
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //TODO Main :)
         }
     }
 }

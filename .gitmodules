@@ -1,0 +1,3 @@
+[submodule "RepositoryDB"]
+	path = RepositoryDB
+	url = https://github.com/Daitarus/RepositoryDB.git
