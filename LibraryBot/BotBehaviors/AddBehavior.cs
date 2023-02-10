@@ -7,7 +7,7 @@ namespace LibraryBot.BotBehaviors
     {
         public static async Task ResponceForAddAsync(Chat chat, ITelegramBotClient bot)
         {
-            bot.SendTextMessageAsync(chat, "Send book's file...");
+            await bot.SendTextMessageAsync(chat, "Send book's file...");
             
         }
     }
