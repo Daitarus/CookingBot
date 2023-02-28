@@ -2,6 +2,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
+using LibraryBot.DataBase;
 
 namespace LibraryBot
 {
@@ -9,25 +10,28 @@ namespace LibraryBot
     {
         public static void ConditionalStopping()
         {
-            string answer = string.Empty;
+            string answer = String.Empty;
             do
             {
                 Console.WriteLine("If you want stopped bot, enter \'exit\' or \'e\'");
                 answer = Console.ReadLine();
             } while (ValidationOfEnteredData(answer));
         }
-        private static bool ValidationOfEnteredData(string answer)
+        private static bool ValidationOfEnteredData(string? answer)
         {
             if (!string.IsNullOrEmpty(answer))
+            {
                 answer = answer.ToLower();
-            if (!answer.Equals("e") && !answer.Equals("exit"))
-                return true;
-            else
-                return false;
+                if (!answer.Equals("e") && !answer.Equals("exit"))
+                    return true;
+            }
+            return false;
         }
 
         public static async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
+            //TODO: write log
+            //TODO: write action in DB
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
             if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
             {
@@ -36,6 +40,7 @@ namespace LibraryBot
         }
         public static async Task HandleErrorAsync(ITelegramBotClient bot, Exception exception, CancellationToken cancellationToken)
         {
+            //TODO: write log
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
         }
 
@@ -43,6 +48,7 @@ namespace LibraryBot
         {
             if (!string.IsNullOrEmpty(message.Text))
             {
+                LibraryBot.DataBase.User user = new LibraryBot.DataBase.User(message.From.FirstName, message.From.Id);
                 switch (message.Text)
                 {
                     case CommandCollection.Start:

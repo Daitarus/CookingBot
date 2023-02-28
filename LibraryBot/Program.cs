@@ -18,11 +18,13 @@ namespace LibraryBot
                 Console.WriteLine("Error: Start data is empty!");
             }
         }
+
         static bool ValidationOfStartData(out string botToken, out string connectionString, out string mainDirPath)
         {
             botToken = ConfigurationManager.AppSettings["BotToken"];
             connectionString = ConfigurationManager.AppSettings["ConnectionString"];
             mainDirPath = ConfigurationManager.AppSettings["MainDirPath"];
+
             if(String.IsNullOrEmpty(botToken) || String.IsNullOrEmpty(connectionString) || String.IsNullOrEmpty(mainDirPath))
             {
                 botToken = String.Empty; connectionString = String.Empty; mainDirPath = String.Empty;
