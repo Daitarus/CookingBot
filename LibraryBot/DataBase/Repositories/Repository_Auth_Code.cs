@@ -14,10 +14,7 @@ namespace LibraryBot.DataBase
             {
                 return auth_codes.First();
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }

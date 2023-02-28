@@ -7,14 +7,35 @@ namespace LibraryBot.DataBase
     [Table("Users")]
     public class User : Entity
     {
-        [Column("Name")]
-        [MaxLength(50)]
+        [Column("IdTelegram")]
         [Required]
-        public string Name { get; set; }
+        public long IdTelegram { get; set; }
 
-        [Column("UserId")]
+        [Column("IsBot")]
         [Required]
-        public long UserId { get; set; }
+        public bool IsBot { get; set; }
+
+        [Column("FirstName")]
+        [Required]
+        public string FirstName { get; set; }
+
+        [Column("LastName")]
+        public string? LastName { get; set; }
+
+        [Column("UserName")]
+        public string? UserName { get; set; }
+
+        [Column("LanguageCode")]
+        public string? LanguageCode { get; set; }
+
+        [Column("CanJoinGroups")]
+        public bool? CanJoinGroups { get; set; }
+
+        [Column("CanReadAllGroupMessages")]
+        public bool? CanReadAllGroupMessages { get; set; }
+
+        [Column("SupportsInlineQueries")]
+        public bool? SupportsInlineQueries { get; set; }
 
         [Column("State")]
         [Required]
@@ -24,15 +45,22 @@ namespace LibraryBot.DataBase
         [Required]
         public int Auth_Code_Id { get; set; }
 
-        public User(string name, long userId, int state = 0)
+        public User(Telegram.Bot.Types.User user, int state = 0)
         {
-            Name = name;
-            UserId = userId;
-            State = state;
+            this.IdTelegram = user.Id;
+            this.IsBot = user.IsBot;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.UserName = user.Username;
+            this.LanguageCode = user.LanguageCode;
+            this.CanJoinGroups = user.CanJoinGroups;
+            this.CanReadAllGroupMessages = user.CanReadAllGroupMessages;
+            this.SupportsInlineQueries = user.SupportsInlineQueries;
+            this.State = state;
         }
-        public User(string name, long userId, int state, int auth_Code_Id) : this(name, userId, state)
+        public User(Telegram.Bot.Types.User user, int state , int auth_code_id) : this(user, state)
         {
-            Auth_Code_Id = auth_Code_Id;
+            this.Auth_Code_Id = auth_code_id;
         }
     }
 }

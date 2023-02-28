@@ -48,7 +48,8 @@ namespace LibraryBot
         {
             if (!string.IsNullOrEmpty(message.Text))
             {
-                LibraryBot.DataBase.User user = new LibraryBot.DataBase.User(message.From.FirstName, message.From.Id);
+                var user = new LibraryBot.DataBase.User(message.From);
+
                 switch (message.Text)
                 {
                     case CommandCollection.Start:
