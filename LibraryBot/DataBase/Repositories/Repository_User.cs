@@ -4,12 +4,15 @@ namespace LibraryBot.DataBase
 {
     internal class Repository_User : Repository<User>
     {
-        public Repository_User(DB db) : base(db) { }
-
-        public User? SelectForIdTelegram(long idTelegram)
+        private LibraryBotDB libraryBotDB;
+        public Repository_User(DB db) : base(db) 
         {
-            LibraryBotDB libraryBotDB = (LibraryBotDB)db;
-            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(idTelegram));
+            libraryBotDB = (LibraryBotDB)db;
+        }
+
+        public User? GetForTelegramId(long IdTelegram)
+        {
+            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(IdTelegram));
             if (users.Count() > 0)
             {
                 return users.First();

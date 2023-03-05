@@ -41,9 +41,24 @@ namespace LibraryBot.DataBase
         [Required]
         public int State { get; set; }
 
-        [Column("Auth_Code_Id")]
+        [Column("Auth_Codes_Id")]
         [Required]
-        public int Auth_Code_Id { get; set; }
+        public int Auth_Codes_Id { get; set; }
+
+        public User(long idTelegram, bool isBot, string firstName, string? lastName, string? userName, string? languageCode, bool? canJoinGroups, bool? canReadAllGroupMessages, bool? supportsInlineQueries, int state, int auth_Codes_Id)
+        {
+            IdTelegram = idTelegram;
+            IsBot = isBot;
+            FirstName = firstName;
+            LastName = lastName;
+            UserName = userName;
+            LanguageCode = languageCode;
+            CanJoinGroups = canJoinGroups;
+            CanReadAllGroupMessages = canReadAllGroupMessages;
+            SupportsInlineQueries = supportsInlineQueries;
+            State = state;
+            Auth_Codes_Id = auth_Codes_Id;
+        }
 
         public User(Telegram.Bot.Types.User user, int state = 0)
         {
@@ -58,9 +73,44 @@ namespace LibraryBot.DataBase
             this.SupportsInlineQueries = user.SupportsInlineQueries;
             this.State = state;
         }
-        public User(Telegram.Bot.Types.User user, int state , int auth_code_id) : this(user, state)
+        public User(Telegram.Bot.Types.User user, int state , int auth_Codes_Id) : this(user, state)
         {
-            this.Auth_Code_Id = auth_code_id;
+            this.Auth_Codes_Id = auth_Codes_Id;
+        }
+
+        public bool EqualsForMainArgs(User? user)
+        {
+            if(user != null)
+            {
+                bool result = true;
+
+                result = result && (this.IdTelegram == user.IdTelegram);
+                result = result && (this.IsBot == user.IsBot);
+                result = result && (this.FirstName == user.FirstName);
+                result = result && (this.LastName == user.LastName);
+                result = result && (this.UserName == user.UserName);
+                result = result && (this.LanguageCode == user.LanguageCode);
+                result = result && (this.CanJoinGroups == user.CanJoinGroups);
+                result = result && (this.CanReadAllGroupMessages == user.CanReadAllGroupMessages);
+                result = result && (this.SupportsInlineQueries == user.SupportsInlineQueries);
+
+                return result;
+            }
+
+            return false;
+        }
+
+        public void UpdateMainArgs(User newUser)
+        {
+            this.IdTelegram = newUser.IdTelegram;
+            this.IsBot = newUser.IsBot;
+            this.FirstName = newUser.FirstName;
+            this.LastName = newUser.LastName;
+            this.UserName = newUser.UserName;
+            this.LanguageCode = newUser.LanguageCode;
+            this.CanJoinGroups = newUser.CanJoinGroups;
+            this.CanReadAllGroupMessages = newUser.CanReadAllGroupMessages;
+            this.SupportsInlineQueries = newUser.SupportsInlineQueries;
         }
     }
 }

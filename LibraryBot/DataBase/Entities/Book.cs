@@ -42,19 +42,18 @@ namespace LibraryBot.DataBase
         [Required]
         public int UserId { get; set; }
 
-        public Book(string name, string extension, int size , DateTime date_added, string fileId, string relativePath, int userId)
+        public Book(string name, string extension, int size, DateTime date_Added, string fileId, string relativePath, int userId)
         {
             Name = name;
             Author = String.Empty;
             Extension = extension;
             Size = size;
-            Date_Added = date_added;
+            Date_Added = date_Added.ToUniversalTime();
             FileId = fileId;
             RelativePath = relativePath;
             UserId = userId;
         }
-
-        public Book(string name, string author, string extension, int size, DateTime date_added, string fileId, string relativePath, int userId) : this(name, extension, size, date_added, fileId, relativePath, userId)
+        public Book(string name, string author, string extension, int size, DateTime date_Added, string fileId, string relativePath, int userId) : this(name, extension, size, date_Added, fileId, relativePath, userId)
         {
             Author = author;
         }

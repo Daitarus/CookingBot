@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using LibraryBot.DataBase;
+using System.Configuration;
 
 namespace LibraryBot
 {
@@ -9,9 +10,20 @@ namespace LibraryBot
             string botToken = String.Empty, connectionString = String.Empty, mainDirPath = String.Empty;
             if (ValidationOfStartData(out botToken, out connectionString, out mainDirPath))
             {
-                TelegramBot bot = new TelegramBot(botToken);
-                Console.WriteLine("Bot was started...");
-                bot.Start(MainBehavior.HandleUpdateAsync, MainBehavior.HandleErrorAsync, MainBehavior.ConditionalStopping);
+                if (LibraryBotDB.CheckDB(connectionString))
+                {
+                    using (LibraryBotDB db = new LibraryBotDB(connectionString))
+                    {
+                        TelegramBot bot = new TelegramBot(botToken);
+
+                        MainBehavior mainBehavior = new MainBehavior(db);
+                        bot.Start(mainBehavior.HandleUpdateAsync, mainBehavior.HandleErrorAsync, MainBehavior.ConditionalStopping);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Error: DB was not connected");
+                }
             }
             else
             {
