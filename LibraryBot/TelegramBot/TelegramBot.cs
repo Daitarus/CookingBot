@@ -1,12 +1,10 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
-using System.Diagnostics;
 
 namespace LibraryBot
 {
-    internal sealed class TelegramBot
+    public sealed class TelegramBot
     {
         private ITelegramBotClient client;
 
@@ -18,6 +16,10 @@ namespace LibraryBot
             client = new TelegramBotClient(botToken);
         }
 
+        public void Start(ITelegramBotHandles telegramBotHandles, Action conditionStopping)
+        {
+            Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, conditionStopping);
+        }
         public void Start(Func<ITelegramBotClient, Update, CancellationToken, Task> handleUpdateAsync, Func<ITelegramBotClient, Exception, CancellationToken, Task> handleErrorAsync, Action conditionalStopping)
         {
             CancellationToken cancellationToken = new CancellationTokenSource().Token;

@@ -112,5 +112,11 @@ namespace LibraryBot.DataBase
             this.CanReadAllGroupMessages = newUser.CanReadAllGroupMessages;
             this.SupportsInlineQueries = newUser.SupportsInlineQueries;
         }
+
+        public enum StateOptions : int
+        {
+            Start = 0,
+            StartAuthorized = 1
+        }
     }
 }

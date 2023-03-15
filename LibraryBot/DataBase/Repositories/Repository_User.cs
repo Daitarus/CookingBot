@@ -1,4 +1,5 @@
 ﻿using RepositoryDB;
+using Telegram.Bot.Types;
 
 namespace LibraryBot.DataBase
 {
@@ -18,6 +19,26 @@ namespace LibraryBot.DataBase
                 return users.First();
             }
             return null;
+        }
+
+        public User UpdateOrAddUser(User newUser)
+        {
+            var oldUser = GetForTelegramId(newUser.IdTelegram);
+            if (oldUser == null)
+            {
+                Add(newUser);
+                SaveChange();
+                return newUser;
+            }
+            else
+            {
+                if (!oldUser.EqualsForMainArgs(newUser))
+                {
+                    oldUser.UpdateMainArgs(newUser);
+                    SaveChange();
+                }
+                return oldUser;
+            }
         }
     }
 }

@@ -15,20 +15,17 @@ namespace LibraryBot
                     using (LibraryBotDB db = new LibraryBotDB(connectionString))
                     {
                         TelegramBot bot = new TelegramBot(botToken);
-
-                        MainBehavior mainBehavior = new MainBehavior(db);
-                        bot.Start(mainBehavior.HandleUpdateAsync, mainBehavior.HandleErrorAsync, MainBehavior.ConditionalStopping);
+                        BotResponse mainBehavior = new BotResponse(db);
+                        ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior.ResponseForMessageAsync);
+                        
+                        bot.Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, MainServerCycle.StopCondition);
                     }
                 }
                 else
-                {
                     Console.WriteLine("Error: DB was not connected");
-                }
             }
             else
-            {
                 Console.WriteLine("Error: Start data is empty!");
-            }
         }
 
         static bool ValidationOfStartData(out string botToken, out string connectionString, out string mainDirPath)
