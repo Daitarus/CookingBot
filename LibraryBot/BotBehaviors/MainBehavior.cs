@@ -2,17 +2,16 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors;
 
-namespace LibraryBot
+namespace LibraryBot.BotBehaviors
 {
-    internal class BotResponse
+    internal class MainBehavior
     {
         private Repository_Auth_Code authCodeR;
         private Repository_User userR;
         private Repository_Book bookR;
 
-        public BotResponse(LibraryBotDB db)
+        public MainBehavior(LibraryBotDB db)
         {
             authCodeR = new Repository_Auth_Code(db);
             userR = new Repository_User(db);
@@ -29,17 +28,17 @@ namespace LibraryBot
                 {
                     case (int)DataBase.User.StateOptions.Start:
                         {
-                            //authBehaivor();
+                            await AuthorizationBehavior.ResponseForAuthorization(message, user, bot);
                             break;
                         }
                     case (int)DataBase.User.StateOptions.StartAuthorized:
                         {
-                            //AnyActionBehaivor();
+                            //AnyActionBehavior();
                             break;
                         }
                     //case (int)DataBase.User.SomeActionState:
                     //    {
-                    //        //SomeActionBehaivor();
+                    //        //SomeActionBehavior();
                     //        break;
                     //    }
                     default:

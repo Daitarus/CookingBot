@@ -1,4 +1,5 @@
 ﻿using LibraryBot.DataBase;
+using LibraryBot.BotBehaviors;
 using System.Configuration;
 
 namespace LibraryBot
@@ -15,7 +16,7 @@ namespace LibraryBot
                     using (LibraryBotDB db = new LibraryBotDB(connectionString))
                     {
                         TelegramBot bot = new TelegramBot(botToken);
-                        BotResponse mainBehavior = new BotResponse(db);
+                        MainBehavior mainBehavior = new MainBehavior(db);
                         ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior.ResponseForMessageAsync);
                         
                         bot.Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, MainServerCycle.StopCondition);
