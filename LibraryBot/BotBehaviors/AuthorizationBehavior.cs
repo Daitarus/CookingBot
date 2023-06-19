@@ -4,9 +4,16 @@ using Telegram.Bot;
 
 namespace LibraryBot.BotBehaviors
 {
-    internal static class AuthorizationBehavior
+    internal class AuthorizationBehavior
     {
-        public static async Task ResponseForAuthorization(Message message, DataBase.User user, ITelegramBotClient bot)
+        private ITelegramBotClient bot;
+
+        public AuthorizationBehavior(ITelegramBotClient bot) 
+        {
+            this.bot = bot;
+        }
+
+        public async Task RespondForAuthorization(Message message, DataBase.User user)
         {
             if(!string.IsNullOrEmpty(message.Text))
             {
@@ -18,6 +25,10 @@ namespace LibraryBot.BotBehaviors
                 {
 
                 }
+            }
+            else
+            {
+                //TODO: print "please, enter your key"
             }
         }
     }

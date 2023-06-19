@@ -27,5 +27,9 @@ namespace LibraryBot
             client.StartReceiving(handleUpdateAsync, handleErrorAsync, receiverOptions, cancellationToken);
             conditionalStopping();
         }
+        public ITelegramBotClient getClient()
+        {
+            return client;
+        }
     }
 }

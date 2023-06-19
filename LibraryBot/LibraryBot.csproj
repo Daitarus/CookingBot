@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConfigHandler\ConfigHandler.csproj" />
     <ProjectReference Include="..\RepositoryDB\RepositoryDB.csproj" />
   </ItemGroup>
 

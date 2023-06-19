@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using LibraryBot.BotBehaviors;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -6,23 +7,23 @@ namespace LibraryBot
 {
     public sealed class BotHandles : ITelegramBotHandles
     {
-        private Func<Message, ITelegramBotClient, Task> responseForMessageAsync;
+        private IBotBehavior botBehavior;
 
-        public BotHandles(Func<Message, ITelegramBotClient, Task> responseForMessageAsync)
+        public BotHandles(IBotBehavior botBehavior)
         {
-            this.responseForMessageAsync = responseForMessageAsync;
+            this.botBehavior = botBehavior;
         }
 
-        public async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
+        public async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
         {
             //TODO: write log
             //TODO: write action in DB
             if ((update.Type == UpdateType.Message) && (update.Message != null))
             {
-                await responseForMessageAsync(update.Message, bot);
+                await botBehavior.RespondForMessageAsync(update.Message);
             }
         }
-        public async Task HandleErrorAsync(ITelegramBotClient bot, Exception exception, CancellationToken cancellationToken)
+        public async Task HandleErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
         {
             //TODO: write log
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
