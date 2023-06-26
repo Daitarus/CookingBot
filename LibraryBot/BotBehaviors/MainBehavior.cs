@@ -7,17 +7,15 @@ namespace LibraryBot.BotBehaviors
 {
     internal class MainBehavior : IBotBehavior
     {
-        private Repository_Auth_Code authCodeR;
-        private Repository_User userR;
-        private Repository_Book bookR;
+        private RepositoryUser userR;
+        private RepositoryDocument bookR;
 
         private AuthorizationBehavior authorizationBehavior;
 
         public MainBehavior(ITelegramBotClient client, LibraryBotDB db)
         {
-            authCodeR = new Repository_Auth_Code(db);
-            userR = new Repository_User(db);
-            bookR = new Repository_Book(db);
+            userR = new RepositoryUser(db);
+            bookR = new RepositoryDocument(db);
 
             authorizationBehavior = new AuthorizationBehavior(client);
         }
@@ -28,26 +26,26 @@ namespace LibraryBot.BotBehaviors
             {
                 var user = userR.UpdateOrAddUser(new DataBase.User(message.From));
 
-                switch (user.State)
-                {
-                    case (int)DataBase.User.StateOptions.Start:
-                        {
-                            await authorizationBehavior.RespondForAuthorization(message, user);
-                            break;
-                        }
-                    case (int)DataBase.User.StateOptions.StartAuthorized:
-                        {
-                            //AnyActionBehavior();
-                            break;
-                        }
-                    //case (int)DataBase.User.SomeActionState:
-                    //    {
-                    //        //SomeActionBehavior();
-                    //        break;
-                    //    }
-                    default:
-                        break;
-                }
+                //switch (user.State)
+                //{
+                //    case (int)DataBase.User.StateOptions.Start:
+                //        {
+                //            await authorizationBehavior.RespondForAuthorization(message, user);
+                //            break;
+                //        }
+                //    case (int)DataBase.User.StateOptions.StartAuthorized:
+                //        {
+                //            //AnyActionBehavior();
+                //            break;
+                //        }
+                //    //case (int)DataBase.User.SomeActionState:
+                //    //    {
+                //    //        //SomeActionBehavior();
+                //    //        break;
+                //    //    }
+                //    default:
+                //        break;
+                //}
             }
         }
     }

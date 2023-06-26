@@ -16,16 +16,20 @@ namespace LibraryBot.DataBase
         public bool IsBot { get; set; }
 
         [Column("FirstName")]
+        [MaxLength(50)]
         [Required]
         public string FirstName { get; set; }
 
         [Column("LastName")]
+        [MaxLength(50)]
         public string? LastName { get; set; }
 
         [Column("UserName")]
+        [MaxLength(50)]
         public string? UserName { get; set; }
 
         [Column("LanguageCode")]
+        [MaxLength(10)]
         public string? LanguageCode { get; set; }
 
         [Column("CanJoinGroups")]
@@ -37,15 +41,7 @@ namespace LibraryBot.DataBase
         [Column("SupportsInlineQueries")]
         public bool? SupportsInlineQueries { get; set; }
 
-        [Column("State")]
-        [Required]
-        public int State { get; set; }
-
-        [Column("Auth_Codes_Id")]
-        [Required]
-        public int Auth_Codes_Id { get; set; }
-
-        public User(long idTelegram, bool isBot, string firstName, string? lastName, string? userName, string? languageCode, bool? canJoinGroups, bool? canReadAllGroupMessages, bool? supportsInlineQueries, int state, int auth_Codes_Id)
+        public User(long idTelegram, bool isBot, string firstName, string? lastName, string? userName, string? languageCode, bool? canJoinGroups, bool? canReadAllGroupMessages, bool? supportsInlineQueries)
         {
             IdTelegram = idTelegram;
             IsBot = isBot;
@@ -56,11 +52,9 @@ namespace LibraryBot.DataBase
             CanJoinGroups = canJoinGroups;
             CanReadAllGroupMessages = canReadAllGroupMessages;
             SupportsInlineQueries = supportsInlineQueries;
-            State = state;
-            Auth_Codes_Id = auth_Codes_Id;
         }
 
-        public User(Telegram.Bot.Types.User user, int state = 0)
+        public User(Telegram.Bot.Types.User user)
         {
             this.IdTelegram = user.Id;
             this.IsBot = user.IsBot;
@@ -71,11 +65,6 @@ namespace LibraryBot.DataBase
             this.CanJoinGroups = user.CanJoinGroups;
             this.CanReadAllGroupMessages = user.CanReadAllGroupMessages;
             this.SupportsInlineQueries = user.SupportsInlineQueries;
-            this.State = state;
-        }
-        public User(Telegram.Bot.Types.User user, int state , int auth_Codes_Id) : this(user, state)
-        {
-            this.Auth_Codes_Id = auth_Codes_Id;
         }
 
         public bool EqualsForMainArgs(User? user)

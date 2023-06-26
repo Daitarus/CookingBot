@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryBot.DataBase
 {
-    [Table("Books")]
-    internal class Book : Entity
+    [Table("Documents")]
+    internal class Document : Entity
     {
         [Column("Name")]
         [MaxLength(100)]
@@ -14,7 +14,7 @@ namespace LibraryBot.DataBase
 
         [Column("Author")]
         [MaxLength(100)]
-        public string Author { get; set; }
+        public string? Author { get; set; }
 
         [Column("Extension")]
         [MaxLength(10)]
@@ -25,35 +25,29 @@ namespace LibraryBot.DataBase
         [Required]
         public int Size { get; set; }
 
-        [Column("Date_Added")]
+        [Column("DateAdded")]
         [Required]
-        public DateTime Date_Added { get; set; }
+        public DateTime DateAdded { get; set; }
 
-        [Column("FileId")]
-        [Required]
-        public string FileId { get; set; }
-
-        [Column("Relative_Path")]
+        [Column("RelativePath")]
         [MaxLength(500)]
         [Required]
         public string RelativePath { get; set; }
 
-        [Column("Id_User")]
+        [Column("UserId")]
         [Required]
         public int UserId { get; set; }
 
-        public Book(string name, string extension, int size, DateTime date_Added, string fileId, string relativePath, int userId)
+        public Document(string name, string extension, int size, DateTime dateAdded, string relativePath, int userId)
         {
             Name = name;
-            Author = String.Empty;
             Extension = extension;
             Size = size;
-            Date_Added = date_Added.ToUniversalTime();
-            FileId = fileId;
+            DateAdded = dateAdded.ToUniversalTime();
             RelativePath = relativePath;
             UserId = userId;
         }
-        public Book(string name, string author, string extension, int size, DateTime date_Added, string fileId, string relativePath, int userId) : this(name, extension, size, date_Added, fileId, relativePath, userId)
+        public Document(string name, string author, string extension, int size, DateTime date_Added, string relativePath, int userId) : this(name, extension, size, date_Added, relativePath, userId)
         {
             Author = author;
         }

@@ -7,8 +7,7 @@ namespace LibraryBot.DataBase
     {
         public LibraryBotDB(string connectionString) : base(connectionString) { }
 
-        public DbSet<Auth_Code> Auth_Codes { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Document> Books { get; set; }
     }
 }

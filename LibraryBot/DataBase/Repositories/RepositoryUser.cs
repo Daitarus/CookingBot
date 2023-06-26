@@ -1,12 +1,11 @@
 ﻿using RepositoryDB;
-using Telegram.Bot.Types;
 
 namespace LibraryBot.DataBase
 {
-    internal class Repository_User : Repository<User>
+    internal class RepositoryUser : Repository<User>
     {
         private LibraryBotDB libraryBotDB;
-        public Repository_User(DB db) : base(db) 
+        public RepositoryUser(DB db) : base(db) 
         {
             libraryBotDB = (LibraryBotDB)db;
         }
