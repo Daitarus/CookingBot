@@ -1,18 +1,3 @@
-DROP DATABASE IF EXISTS "LybraryBot";
-
-CREATE DATABASE "LybraryBot"
-    WITH
-    OWNER = "LybraryBotUser"
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Russian_Russia.1251'
-    LC_CTYPE = 'Russian_Russia.1251'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
-
-DROP TABLE IF EXISTS "Users";
-DROP TABLE IF EXISTS "Documents";
-
 CREATE TABLE IF NOT EXISTS "Users"
 (
     "Id" SERIAL PRIMARY KEY,
@@ -26,8 +11,9 @@ CREATE TABLE IF NOT EXISTS "Users"
     "CanReadAllGroupMessages" boolean,
     "SupportsInlineQueries" boolean
 )
+TABLESPACE pg_default;
 
-CREATE TABLE IF NOT EXISTS public."Documents"
+CREATE TABLE IF NOT EXISTS "Documents"
 (
     "Id" SERIAL PRIMARY KEY,
     "Name" character varying(100) NOT NULL,
@@ -38,3 +24,4 @@ CREATE TABLE IF NOT EXISTS public."Documents"
     "RelativePath" character varying(500) NOT NULL,
 	"UserId" int REFERENCES "Users" ("Id")
 )
+TABLESPACE pg_default;
