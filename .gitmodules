@@ -1,0 +1,6 @@
+[submodule "ConfigHandler"]
+	path = ConfigHandler
+	url = https://github.com/Daitarus/ConfigHandler.git
+[submodule "RepositoryDB"]
+	path = RepositoryDB
+	url = https://github.com/Daitarus/RepositoryDB.git
