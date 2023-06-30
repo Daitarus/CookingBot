@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS "Documents"
     "Size" integer NOT NULL,
     "DateAdded" timestamp with time zone NOT NULL,
     "RelativePath" character varying(500) NOT NULL,
-	"UserId" int REFERENCES "Users" ("Id")
+    "UserId" int REFERENCES "Users" ("Id")
 )
 TABLESPACE pg_default;

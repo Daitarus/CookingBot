@@ -16,19 +16,8 @@ namespace LibraryBot
                 string sqlScriptPath = configValues.GetValueForKey("SQLScriptPath").GetValue();
                 string mainDirPath = configValues.GetValueForKey("MainDirPath").GetValue();
 
-                //refacoring?
-                bool isConnected = false;
-                string createDBScript = LibraryBotDB.GetSqlScript(sqlScriptPath);
-                if (String.IsNullOrEmpty(createDBScript))
-                    isConnected = LibraryBotDB.CheckDB(connectionString);
-                else
-                {
-                    isConnected = LibraryBotDB.CheckDB(connectionString, createDBScript);
-                    Console.WriteLine("Attention: The DB did not exist, but it was created!");
-                }
-                //
-
-                if (isConnected)
+                string createTablesScript = LibraryBotDB.GetSqlScript(sqlScriptPath);
+                if(LibraryBotDB.CheckOrCreateDB(connectionString, createTablesScript))
                 {
                     using (LibraryBotDB db = new LibraryBotDB(connectionString))
                     {
@@ -41,7 +30,7 @@ namespace LibraryBot
                     }
                 }
                 else
-                    Console.WriteLine("Error: The DB was not connected");
+                    Console.WriteLine("Error: The DB was not created!");
             }
             else
                 Console.WriteLine("Error: The data in the config file is empty!");
