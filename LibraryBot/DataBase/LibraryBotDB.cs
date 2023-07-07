@@ -3,7 +3,7 @@ using RepositoryDB;
 
 namespace LibraryBot.DataBase
 {
-    internal class LibraryBotDB : DB
+    internal class LibraryBotDB : RepositoryDB.DataBase
     {
         public LibraryBotDB(string connectionString) : base(connectionString) { }
 

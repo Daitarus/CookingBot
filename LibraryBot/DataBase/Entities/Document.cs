@@ -1,6 +1,8 @@
 ﻿using RepositoryDB;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Telegram.Bot.Types;
 
 namespace LibraryBot.DataBase
 {
@@ -50,6 +52,38 @@ namespace LibraryBot.DataBase
         public Document(string name, string author, string extension, int size, DateTime date_Added, string relativePath, int userId) : this(name, extension, size, date_Added, relativePath, userId)
         {
             Author = author;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj != null && obj is Document document)
+            {
+                bool isEqual = true;
+                isEqual = isEqual && (Name == document.Name);
+                isEqual = isEqual && (Author == document.Author);
+                isEqual = isEqual && (Extension == document.Extension);
+                isEqual = isEqual && (Size == document.Size);
+                isEqual = isEqual && (RelativePath == document.RelativePath);
+                isEqual = isEqual && (UserId == document.UserId);
+
+                return isEqual;
+            }
+            return false;
+        }
+
+        public override void Update(Entity entity)
+        {
+            if (entity is Document document)
+            {
+                Name = document.Name;
+                Author = document.Author;
+                Extension = document.Extension;
+                Size = document.Size;
+                RelativePath = document.RelativePath;
+                UserId = document.UserId;
+            }
+            else
+                base.Update(entity);
         }
     }
 }

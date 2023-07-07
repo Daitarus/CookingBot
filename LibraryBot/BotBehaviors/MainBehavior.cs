@@ -21,9 +21,9 @@ namespace LibraryBot.BotBehaviors
             if (message.From != null)
             {
                 var user = new DataBase.User(message.From);
-                user = userR.UpdateOrAddUser(user);
+                userR.UpdateOrAddForTelegramId(user);
 
-
+                userR.SaveChanges();
             }
         }
     }

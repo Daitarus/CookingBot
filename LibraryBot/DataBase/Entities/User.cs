@@ -56,50 +56,53 @@ namespace LibraryBot.DataBase
 
         public User(Telegram.Bot.Types.User user)
         {
-            this.IdTelegram = user.Id;
-            this.IsBot = user.IsBot;
-            this.FirstName = user.FirstName;
-            this.LastName = user.LastName;
-            this.UserName = user.Username;
-            this.LanguageCode = user.LanguageCode;
-            this.CanJoinGroups = user.CanJoinGroups;
-            this.CanReadAllGroupMessages = user.CanReadAllGroupMessages;
-            this.SupportsInlineQueries = user.SupportsInlineQueries;
+            IdTelegram = user.Id;
+            IsBot = user.IsBot;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            UserName = user.Username;
+            LanguageCode = user.LanguageCode;
+            CanJoinGroups = user.CanJoinGroups;
+            CanReadAllGroupMessages = user.CanReadAllGroupMessages;
+            SupportsInlineQueries = user.SupportsInlineQueries;
         }
 
-        public bool EqualForMainArgs(User? user)
+        public override bool Equals(object? obj)
         {
-            if(user != null)
+            if ((obj != null) && (obj is User user))
             {
                 bool isEqual = true;
-
-                isEqual = isEqual && (this.IdTelegram == user.IdTelegram);
-                isEqual = isEqual && (this.IsBot == user.IsBot);
-                isEqual = isEqual && (this.FirstName == user.FirstName);
-                isEqual = isEqual && (this.LastName == user.LastName);
-                isEqual = isEqual && (this.UserName == user.UserName);
-                isEqual = isEqual && (this.LanguageCode == user.LanguageCode);
-                isEqual = isEqual && (this.CanJoinGroups == user.CanJoinGroups);
-                isEqual = isEqual && (this.CanReadAllGroupMessages == user.CanReadAllGroupMessages);
-                isEqual = isEqual && (this.SupportsInlineQueries == user.SupportsInlineQueries);
+                isEqual = isEqual && (IdTelegram == user.IdTelegram);
+                isEqual = isEqual && (IsBot == user.IsBot);
+                isEqual = isEqual && (FirstName == user.FirstName);
+                isEqual = isEqual && (LastName == user.LastName);
+                isEqual = isEqual && (UserName == user.UserName);
+                isEqual = isEqual && (LanguageCode == user.LanguageCode);
+                isEqual = isEqual && (CanJoinGroups == user.CanJoinGroups);
+                isEqual = isEqual && (CanReadAllGroupMessages == user.CanReadAllGroupMessages);
+                isEqual = isEqual && (SupportsInlineQueries == user.SupportsInlineQueries);
 
                 return isEqual;
             }
-
             return false;
         }
 
-        public void UpdateMainArgs(User newUser)
-        {
-            this.IdTelegram = newUser.IdTelegram;
-            this.IsBot = newUser.IsBot;
-            this.FirstName = newUser.FirstName;
-            this.LastName = newUser.LastName;
-            this.UserName = newUser.UserName;
-            this.LanguageCode = newUser.LanguageCode;
-            this.CanJoinGroups = newUser.CanJoinGroups;
-            this.CanReadAllGroupMessages = newUser.CanReadAllGroupMessages;
-            this.SupportsInlineQueries = newUser.SupportsInlineQueries;
+        public override void Update(Entity entity)
+        {           
+            if(entity is User user)
+            {
+                IdTelegram = user.IdTelegram;
+                IsBot = user.IsBot;
+                FirstName = user.FirstName;
+                LastName = user.LastName;
+                UserName = user.UserName;
+                LanguageCode = user.LanguageCode;
+                CanJoinGroups = user.CanJoinGroups;
+                CanReadAllGroupMessages = user.CanReadAllGroupMessages;
+                SupportsInlineQueries = user.SupportsInlineQueries;
+            }
+            else
+                base.Update(entity);
         }
     }
 }

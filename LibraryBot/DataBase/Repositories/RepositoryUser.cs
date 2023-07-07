@@ -5,14 +5,14 @@ namespace LibraryBot.DataBase
     internal class RepositoryUser : Repository<User>
     {
         private LibraryBotDB libraryBotDB;
-        public RepositoryUser(DB db) : base(db) 
+        public RepositoryUser(RepositoryDB.DataBase db) : base(db) 
         {
             libraryBotDB = (LibraryBotDB)db;
         }
 
-        public User? GetForTelegramId(long IdTelegram)
+        public User? SelectForTelegramId(long TelegramId)
         {
-            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(IdTelegram));
+            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(TelegramId));
             if (users.Count() > 0)
             {
                 return users.First();
@@ -20,23 +20,19 @@ namespace LibraryBot.DataBase
             return null;
         }
 
-        public User UpdateOrAddUser(User newUser)
+        public void UpdateOrAddForTelegramId(User user)
         {
-            var oldUser = GetForTelegramId(newUser.IdTelegram);
-            if (oldUser == null)
+            User? oldUser = SelectForTelegramId(user.IdTelegram);
+            if(oldUser == null)
             {
-                Add(newUser);
-                SaveChange();
-                return newUser;
+                Add(user);
             }
             else
             {
-                if (!oldUser.EqualForMainArgs(newUser))
+                if(!oldUser.Equals(user))
                 {
-                    oldUser.UpdateMainArgs(newUser);
-                    SaveChange();
+                    oldUser.Update(user);
                 }
-                return oldUser;
             }
         }
     }
