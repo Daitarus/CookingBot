@@ -8,44 +8,22 @@ namespace LibraryBot.BotBehaviors
     internal class MainBehavior : IBotBehavior
     {
         private RepositoryUser userR;
-        private RepositoryDocument bookR;
-
-        private AuthorizationBehavior authorizationBehavior;
+        private RepositoryDocument documentR;
 
         public MainBehavior(ITelegramBotClient client, LibraryBotDB db)
         {
             userR = new RepositoryUser(db);
-            bookR = new RepositoryDocument(db);
-
-            authorizationBehavior = new AuthorizationBehavior(client);
+            documentR = new RepositoryDocument(db);
         }
 
         public async Task RespondForMessageAsync(Message message)
         {
             if (message.From != null)
             {
-                var user = userR.UpdateOrAddUser(new DataBase.User(message.From));
+                var user = new DataBase.User(message.From);
+                user = userR.UpdateOrAddUser(user);
 
-                //switch (user.State)
-                //{
-                //    case (int)DataBase.User.StateOptions.Start:
-                //        {
-                //            await authorizationBehavior.RespondForAuthorization(message, user);
-                //            break;
-                //        }
-                //    case (int)DataBase.User.StateOptions.StartAuthorized:
-                //        {
-                //            //AnyActionBehavior();
-                //            break;
-                //        }
-                //    //case (int)DataBase.User.SomeActionState:
-                //    //    {
-                //    //        //SomeActionBehavior();
-                //    //        break;
-                //    //    }
-                //    default:
-                //        break;
-                //}
+
             }
         }
     }

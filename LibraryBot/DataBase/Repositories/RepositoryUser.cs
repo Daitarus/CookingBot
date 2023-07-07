@@ -31,7 +31,7 @@ namespace LibraryBot.DataBase
             }
             else
             {
-                if (!oldUser.EqualsForMainArgs(newUser))
+                if (!oldUser.EqualForMainArgs(newUser))
                 {
                     oldUser.UpdateMainArgs(newUser);
                     SaveChange();

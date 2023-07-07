@@ -67,23 +67,23 @@ namespace LibraryBot.DataBase
             this.SupportsInlineQueries = user.SupportsInlineQueries;
         }
 
-        public bool EqualsForMainArgs(User? user)
+        public bool EqualForMainArgs(User? user)
         {
             if(user != null)
             {
-                bool result = true;
+                bool isEqual = true;
 
-                result = result && (this.IdTelegram == user.IdTelegram);
-                result = result && (this.IsBot == user.IsBot);
-                result = result && (this.FirstName == user.FirstName);
-                result = result && (this.LastName == user.LastName);
-                result = result && (this.UserName == user.UserName);
-                result = result && (this.LanguageCode == user.LanguageCode);
-                result = result && (this.CanJoinGroups == user.CanJoinGroups);
-                result = result && (this.CanReadAllGroupMessages == user.CanReadAllGroupMessages);
-                result = result && (this.SupportsInlineQueries == user.SupportsInlineQueries);
+                isEqual = isEqual && (this.IdTelegram == user.IdTelegram);
+                isEqual = isEqual && (this.IsBot == user.IsBot);
+                isEqual = isEqual && (this.FirstName == user.FirstName);
+                isEqual = isEqual && (this.LastName == user.LastName);
+                isEqual = isEqual && (this.UserName == user.UserName);
+                isEqual = isEqual && (this.LanguageCode == user.LanguageCode);
+                isEqual = isEqual && (this.CanJoinGroups == user.CanJoinGroups);
+                isEqual = isEqual && (this.CanReadAllGroupMessages == user.CanReadAllGroupMessages);
+                isEqual = isEqual && (this.SupportsInlineQueries == user.SupportsInlineQueries);
 
-                return result;
+                return isEqual;
             }
 
             return false;
@@ -100,12 +100,6 @@ namespace LibraryBot.DataBase
             this.CanJoinGroups = newUser.CanJoinGroups;
             this.CanReadAllGroupMessages = newUser.CanReadAllGroupMessages;
             this.SupportsInlineQueries = newUser.SupportsInlineQueries;
-        }
-
-        public enum StateOptions : int
-        {
-            Start = 0,
-            StartAuthorized = 1
         }
     }
 }
