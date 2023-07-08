@@ -6,14 +6,14 @@ namespace LibraryBot
 {
     public sealed class TelegramBot
     {
-        private ITelegramBotClient client;
+        private ITelegramBotClient botClient;
 
         public TelegramBot(string botToken)
         {
             if (String.IsNullOrEmpty(botToken))
                 throw new ArgumentNullException(nameof(botToken));
 
-            client = new TelegramBotClient(botToken);
+            botClient = new TelegramBotClient(botToken);
         }
 
         public void Start(ITelegramBotHandles telegramBotHandles, Action conditionStopping)
@@ -24,12 +24,12 @@ namespace LibraryBot
         {
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             ReceiverOptions receiverOptions = new ReceiverOptions{AllowedUpdates = { }};
-            client.StartReceiving(handleUpdateAsync, handleErrorAsync, receiverOptions, cancellationToken);
+            botClient.StartReceiving(handleUpdateAsync, handleErrorAsync, receiverOptions, cancellationToken);
             conditionalStopping();
         }
-        public ITelegramBotClient getClient()
+        public ITelegramBotClient getBotClient()
         {
-            return client;
+            return botClient;
         }
     }
 }

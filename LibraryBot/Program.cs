@@ -23,7 +23,7 @@ namespace LibraryBot
                     {
                         TelegramBot bot = new TelegramBot(botToken);
 
-                        IBotBehavior mainBehavior = new MainBehavior(bot.getClient(), db);
+                        IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db);
                         ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
 
                         bot.Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, MainServerCycle.StopCondition);
