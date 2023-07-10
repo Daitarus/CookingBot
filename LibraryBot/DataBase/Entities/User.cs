@@ -41,6 +41,11 @@ namespace LibraryBot.DataBase
         [Column("SupportsInlineQueries")]
         public bool? SupportsInlineQueries { get; set; }
 
+        [Column("State")]
+        public int State { get; set; }
+
+
+
         public User(long idTelegram, bool isBot, string firstName, string? lastName, string? userName, string? languageCode, bool? canJoinGroups, bool? canReadAllGroupMessages, bool? supportsInlineQueries)
         {
             IdTelegram = idTelegram;

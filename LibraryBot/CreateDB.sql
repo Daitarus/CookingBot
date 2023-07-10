@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS "Users"
     "LanguageCode" character varying(10),
     "CanJoinGroups" boolean,
     "CanReadAllGroupMessages" boolean,
-    "SupportsInlineQueries" boolean
+    "SupportsInlineQueries" boolean,
+    "State" int NOT NULL
 )
 TABLESPACE pg_default;
 
