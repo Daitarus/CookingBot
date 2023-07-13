@@ -2,7 +2,8 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors.Commands;
+using LibraryBot.BotBehaviors.CommandFactory.Commands;
+using LibraryBot.BotBehaviors.CommandFactory;
 
 namespace LibraryBot.BotBehaviors
 {
@@ -21,60 +22,32 @@ namespace LibraryBot.BotBehaviors
 
         public async Task RespondForMessageAsync(Message message)
         {
+            string? commandString = null;
             if (message.From != null)
             {
-                var user = new DataBase.User(message.From);
-                repositoryUser.UpdateOrAddForTelegramId(user);
-
-                IBotCommand command = CommandDefinition(message.Text);
-
-                await command.Execute();
-
+                var userFromTelegram = new DataBase.User(message.From);
+                var userFromDB = repositoryUser.SelectForIdTelegram(userFromTelegram.IdTelegram);
+                if(userFromDB == null)
+                {
+                    repositoryUser.Add(userFromTelegram);
+                    userFromDB = userFromTelegram;
+                }
+                else
+                {
+                    if(userFromDB.Equals(userFromTelegram))
+                    {
+                        userFromDB.Update(userFromTelegram);
+                    }
+                }
                 repositoryUser.SaveChanges();
-            }
-        }
 
-        private IBotCommand CommandDefinition(string? commandValue)
-        {
-            IBotCommand command = new UnknownCommand();
-            switch (commandValue)
-            {
-                case AddCommand.commandValue:
-                    {
-                        command = new AddCommand();
-                        break;
-                    }
-                case GetCommand.commandValue:
-                    {
-                        command = new GetCommand();
-                        break;
-                    }
-                case DeleteCommand.commandValue:
-                    {
-                        command = new DeleteCommand();
-                        break;
-                    }
-                case CreateFolderCommand.commandValue:
-                    {
-                        command = new CreateFolderCommand();
-                        break;
-                    }
-                case DeleteFolderCommand.commandValue:
-                    {
-                        command = new DeleteFolderCommand();
-                        break;
-                    }
-                case PrintListCommand.commandValue:
-                    {
-                        command = new PrintListCommand();
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                commandString = message.Text;
             }
-            return command;
+
+            IBotCommandFactory botCommandFactory = new BotCommandFactory();
+            IBotCommand command = botCommandFactory.CreateBotCommand(commandString);
+
+            await command.Execute();
         }
     }
 }

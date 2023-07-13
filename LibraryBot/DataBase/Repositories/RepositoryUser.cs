@@ -10,9 +10,9 @@ namespace LibraryBot.DataBase
             libraryBotDB = (LibraryBotDB)db;
         }
 
-        public User? SelectForTelegramId(long TelegramId)
+        public User? SelectForIdTelegram(long IdTelegram)
         {
-            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(TelegramId));
+            IQueryable<User> users = libraryBotDB.Users.Where(user => user.IdTelegram.Equals(IdTelegram));
             if (users.Count() > 0)
             {
                 return users.First();
@@ -22,7 +22,7 @@ namespace LibraryBot.DataBase
 
         public void UpdateOrAddForTelegramId(User user)
         {
-            User? oldUser = SelectForTelegramId(user.IdTelegram);
+            User? oldUser = SelectForIdTelegram(user.IdTelegram);
             if(oldUser == null)
             {
                 Add(user);
