@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.CommandFactory.Commands
+namespace LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands
 {
-    internal class GetCommand : IBotCommand
+    internal class PrintListCommand : IClientCommand
     {
-        public const string commandValue = "/get";
+        public const string commandValue = "/list";
         public async Task Execute()
         {
 

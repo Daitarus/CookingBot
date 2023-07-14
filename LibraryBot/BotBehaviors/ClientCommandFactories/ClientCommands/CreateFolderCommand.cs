@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.CommandFactory.Commands
+namespace LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands
 {
-    internal class AddCommand : IBotCommand
+    internal class CreateFolderCommand : IClientCommand
     {
-        public const string commandValue = "/add";
+        public const string commandValue = "/cfolder";
 
         public async Task Execute()
         {

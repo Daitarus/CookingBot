@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.CommandFactory.Commands
+namespace LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands
 {
-    internal interface IBotCommand
+    internal interface IClientCommand
     {
         public Task Execute();
     }

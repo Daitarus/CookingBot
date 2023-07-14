@@ -2,8 +2,8 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors.CommandFactory.Commands;
-using LibraryBot.BotBehaviors.CommandFactory;
+using LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands;
+using LibraryBot.BotBehaviors.ClientCommandFactories;
 
 namespace LibraryBot.BotBehaviors
 {
@@ -22,32 +22,60 @@ namespace LibraryBot.BotBehaviors
 
         public async Task RespondForMessageAsync(Message message)
         {
-            string? commandString = null;
+            DataBase.User? user = GetUserFromMessage(message);
+            user = ExchangeUserDataWithDB(user);
+
+            string? commandString = message.Text;
+
+            IClientCommandFactory botCommandFactory = ChooseFactoryForUserState(user);
+            IClientCommand command = botCommandFactory.CreateBotCommand(commandString);
+
+            await command.Execute();
+        }
+
+        private DataBase.User? GetUserFromMessage(Message message)
+        {
+            DataBase.User? user = null;
             if (message.From != null)
             {
-                var userFromTelegram = new DataBase.User(message.From);
-                var userFromDB = repositoryUser.SelectForIdTelegram(userFromTelegram.IdTelegram);
-                if(userFromDB == null)
+                user = new DataBase.User(message.From);
+            }
+            return user;
+        }
+        private DataBase.User? ExchangeUserDataWithDB(DataBase.User? user)
+        {
+            if (user != null)
+            {
+                var dbUser = repositoryUser.SelectForIdTelegram(user.IdTelegram);
+                if (dbUser == null)
                 {
-                    repositoryUser.Add(userFromTelegram);
-                    userFromDB = userFromTelegram;
+                    repositoryUser.Add(user);
                 }
                 else
                 {
-                    if(userFromDB.Equals(userFromTelegram))
+                    if (dbUser.Equals(user))
                     {
-                        userFromDB.Update(userFromTelegram);
+                        dbUser.UpdateMainProperties(user);
+                        user = dbUser;
                     }
                 }
                 repositoryUser.SaveChanges();
-
-                commandString = message.Text;
             }
+            return user;
+        }
 
-            IBotCommandFactory botCommandFactory = new BotCommandFactory();
-            IBotCommand command = botCommandFactory.CreateBotCommand(commandString);
-
-            await command.Execute();
+        private IClientCommandFactory ChooseFactoryForUserState(DataBase.User? user)
+        {
+            IClientCommandFactory botCommandFactory = new CommandFactoryForNullUser();
+            if(user!=null)
+            { 
+                switch (user.State)
+                {
+                    case 0:
+                        return new CommandFactoryForState0();
+                }
+            }
+            return botCommandFactory;
         }
     }
 }

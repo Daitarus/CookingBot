@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.CommandFactory.Commands
+namespace LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands
 {
-    internal class BackCommand : IBotCommand
+    internal class DeleteCommand : IClientCommand
     {
-        public const string commandValue = "/back";
+        public const string commandValue = "/delete";
 
         public async Task Execute()
         {

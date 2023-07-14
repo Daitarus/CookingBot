@@ -70,20 +70,5 @@ namespace LibraryBot.DataBase
             }
             return false;
         }
-
-        public override void Update(Entity entity)
-        {
-            if (entity is Document document)
-            {
-                Name = document.Name;
-                Author = document.Author;
-                Extension = document.Extension;
-                Size = document.Size;
-                RelativePath = document.RelativePath;
-                UserId = document.UserId;
-            }
-            else
-                base.Update(entity);
-        }
     }
 }

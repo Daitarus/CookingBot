@@ -92,22 +92,17 @@ namespace LibraryBot.DataBase
             return false;
         }
 
-        public override void Update(Entity entity)
-        {           
-            if(entity is User user)
-            {
-                IdTelegram = user.IdTelegram;
-                IsBot = user.IsBot;
-                FirstName = user.FirstName;
-                LastName = user.LastName;
-                UserName = user.UserName;
-                LanguageCode = user.LanguageCode;
-                CanJoinGroups = user.CanJoinGroups;
-                CanReadAllGroupMessages = user.CanReadAllGroupMessages;
-                SupportsInlineQueries = user.SupportsInlineQueries;
-            }
-            else
-                base.Update(entity);
+        public void UpdateMainProperties(User user)
+        {
+            IdTelegram = user.IdTelegram;
+            IsBot = user.IsBot;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            UserName = user.UserName;
+            LanguageCode = user.LanguageCode;
+            CanJoinGroups = user.CanJoinGroups;
+            CanReadAllGroupMessages = user.CanReadAllGroupMessages;
+            SupportsInlineQueries = user.SupportsInlineQueries;
         }
     }
 }

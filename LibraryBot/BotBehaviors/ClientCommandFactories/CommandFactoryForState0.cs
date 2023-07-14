@@ -1,17 +1,17 @@
-﻿using LibraryBot.BotBehaviors.CommandFactory.Commands;
+﻿using LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.CommandFactory
+namespace LibraryBot.BotBehaviors.ClientCommandFactories
 {
-    internal class BotCommandFactory : IBotCommandFactory
+    internal class CommandFactoryForState0 : IClientCommandFactory
     {
-        public IBotCommand CreateBotCommand(string? commandString)
+        public IClientCommand CreateBotCommand(string? commandString)
         {
-            IBotCommand botCommand = new UnknownCommand();
+            IClientCommand botCommand = new UnknownCommand();
             switch (commandString)
             {
                 case AddCommand.commandValue:
@@ -42,10 +42,6 @@ namespace LibraryBot.BotBehaviors.CommandFactory
                 case PrintListCommand.commandValue:
                     {
                         botCommand = new PrintListCommand();
-                        break;
-                    }
-                default:
-                    {
                         break;
                     }
             }

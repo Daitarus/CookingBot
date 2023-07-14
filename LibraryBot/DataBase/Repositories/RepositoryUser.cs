@@ -31,7 +31,7 @@ namespace LibraryBot.DataBase
             {
                 if(!oldUser.Equals(user))
                 {
-                    oldUser.Update(user);
+                    oldUser.UpdateMainProperties(user);
                 }
             }
         }
