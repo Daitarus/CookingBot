@@ -2,20 +2,21 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors.ClientCommandFactories.ClientCommands;
-using LibraryBot.BotBehaviors.ClientCommandFactories;
+using LibraryBot.BotBehaviors.RequestsFactories;
+using LibraryBot.BotBehaviors.RequestsFactories.Requests;
 
 namespace LibraryBot.BotBehaviors
 {
     internal class BotBehavior : IBotBehavior
     {
-        private readonly ITelegramBotClient botClient;
+        private readonly ITelegramBotClient client;
         private readonly RepositoryUser repositoryUser;
         private readonly RepositoryDocument repositoryDocument;
+        private IRequestFactory clientCommandFactory = new RequestFactory();
 
-        public BotBehavior(ITelegramBotClient botClient, LibraryBotDB db)
+        public BotBehavior(ITelegramBotClient client, LibraryBotDB db)
         {
-            this.botClient = botClient;
+            this.client = client;
             repositoryUser = new RepositoryUser(db);
             repositoryDocument = new RepositoryDocument(db);
         }
@@ -24,13 +25,7 @@ namespace LibraryBot.BotBehaviors
         {
             DataBase.User? user = GetUserFromMessage(message);
             user = ExchangeUserDataWithDB(user);
-
-            string? commandString = message.Text;
-
-            IClientCommandFactory botCommandFactory = ChooseFactoryForUserState(user);
-            IClientCommand command = botCommandFactory.CreateBotCommand(commandString);
-
-            await command.Execute();
+            
         }
 
         private DataBase.User? GetUserFromMessage(Message message)
@@ -42,6 +37,7 @@ namespace LibraryBot.BotBehaviors
             }
             return user;
         }
+
         private DataBase.User? ExchangeUserDataWithDB(DataBase.User? user)
         {
             if (user != null)
@@ -62,20 +58,6 @@ namespace LibraryBot.BotBehaviors
                 repositoryUser.SaveChanges();
             }
             return user;
-        }
-
-        private IClientCommandFactory ChooseFactoryForUserState(DataBase.User? user)
-        {
-            IClientCommandFactory botCommandFactory = new CommandFactoryForNullUser();
-            if(user!=null)
-            { 
-                switch (user.State)
-                {
-                    case 0:
-                        return new CommandFactoryForState0();
-                }
-            }
-            return botCommandFactory;
         }
     }
 }

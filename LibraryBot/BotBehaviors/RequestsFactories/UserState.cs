@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBot.BotBehaviors.ClientCommandFactories
+namespace LibraryBot.BotBehaviors.RequestsFactories
 {
     internal enum UserState : int
     {
