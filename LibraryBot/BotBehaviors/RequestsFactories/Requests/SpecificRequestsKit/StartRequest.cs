@@ -11,7 +11,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit
     internal class StartRequest : Request
     {
         public const string commandValue = "/start";
-        public override Message CreateRespondingMessage()
+        public override Message CreateResponse()
         {
 
         }

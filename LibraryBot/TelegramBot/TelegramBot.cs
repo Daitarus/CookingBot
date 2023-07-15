@@ -6,30 +6,26 @@ namespace LibraryBot
 {
     public sealed class TelegramBot
     {
-        private ITelegramBotClient botClient;
+        private ITelegramBotClient telegramBotClient;
 
         public TelegramBot(string botToken)
         {
             if (String.IsNullOrEmpty(botToken))
                 throw new ArgumentNullException(nameof(botToken));
 
-            botClient = new TelegramBotClient(botToken);
+            telegramBotClient = new TelegramBotClient(botToken);
         }
 
-        public void Start(ITelegramBotHandles telegramBotHandles, Action conditionStopping)
-        {
-            Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, conditionStopping);
-        }
-        public void Start(Func<ITelegramBotClient, Update, CancellationToken, Task> handleUpdateAsync, Func<ITelegramBotClient, Exception, CancellationToken, Task> handleErrorAsync, Action conditionalStopping)
+        public void Start(ITelegramBotHandles telegramBotHandles, Action stopCondition)
         {
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
-            ReceiverOptions receiverOptions = new ReceiverOptions{AllowedUpdates = { }};
-            botClient.StartReceiving(handleUpdateAsync, handleErrorAsync, receiverOptions, cancellationToken);
-            conditionalStopping();
+            ReceiverOptions receiverOptions = new ReceiverOptions { AllowedUpdates = { } };
+            telegramBotClient.StartReceiving(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, receiverOptions, cancellationToken);
+            stopCondition();
         }
         public ITelegramBotClient getBotClient()
         {
-            return botClient;
+            return telegramBotClient;
         }
     }
 }

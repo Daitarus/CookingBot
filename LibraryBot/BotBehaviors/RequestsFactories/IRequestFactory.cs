@@ -10,6 +10,6 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
 {
     internal interface IRequestFactory
     {
-        public IRequest CreateBotCommand(Message message);
+        public IRequest DesignRequest(Message message);
     }
 }

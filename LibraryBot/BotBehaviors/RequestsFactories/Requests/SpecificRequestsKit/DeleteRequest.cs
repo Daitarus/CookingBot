@@ -12,7 +12,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit
     {
         public const string commandValue = "/delete";
 
-        public override Message CreateRespondingMessage()
+        public override Message CreateResponse()
         {
 
         }

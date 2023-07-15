@@ -12,7 +12,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit
     {
         public const string commandValue = "/dfolder";
 
-        public override Message CreateRespondingMessage()
+        public override Message CreateResponse()
         {
 
         }

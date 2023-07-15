@@ -11,7 +11,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit
     internal class PrintListRequest : Request
     {
         public const string commandValue = "/list";
-        public override Message CreateRespondingMessage()
+        public override Message CreateResponse()
         {
 
         }

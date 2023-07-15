@@ -11,7 +11,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit
     internal class GetRequest : Request
     {
         public const string commandValue = "/get";
-        public override Message CreateRespondingMessage()
+        public override Message CreateResponse()
         {
 
         }

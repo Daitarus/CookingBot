@@ -5,7 +5,7 @@
         public static void StopCondition()
         {
             Console.WriteLine("Bot was started...");
-            string answer = String.Empty;
+            string? answer = null;
             do
             {
                 Console.WriteLine("If you want stopped bot, enter \'exit\' or \'e\'");

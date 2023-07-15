@@ -1,31 +1,36 @@
 ﻿using Telegram.Bot;
-using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
 using LibraryBot.BotBehaviors.RequestsFactories;
 using LibraryBot.BotBehaviors.RequestsFactories.Requests;
+using LibraryBot.BotBehaviors.Response;
 
 namespace LibraryBot.BotBehaviors
 {
     internal class BotBehavior : IBotBehavior
     {
-        private readonly ITelegramBotClient client;
+        private readonly ITelegramBotClient telegramBotClient;
         private readonly RepositoryUser repositoryUser;
-        private readonly RepositoryDocument repositoryDocument;
-        private IRequestFactory clientCommandFactory = new RequestFactory();
+        private IRequestFactory requestFactory;
 
-        public BotBehavior(ITelegramBotClient client, LibraryBotDB db)
+        public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBotDB db)
         {
-            this.client = client;
+            this.telegramBotClient = telegramBotClient;
             repositoryUser = new RepositoryUser(db);
-            repositoryDocument = new RepositoryDocument(db);
+
+            RepositoryDocument repositoryDocument = new RepositoryDocument(db);
+            requestFactory = new RequestFactory(repositoryDocument);
         }
 
         public async Task RespondForMessageAsync(Message message)
         {
             DataBase.User? user = GetUserFromMessage(message);
             user = ExchangeUserDataWithDB(user);
-            
+
+            IRequest request = requestFactory.DesignRequest(message);
+            IResponse response = request.CreateResponse();
+
+            await SendResponse(message.Chat, response);
         }
 
         private DataBase.User? GetUserFromMessage(Message message)
@@ -58,6 +63,14 @@ namespace LibraryBot.BotBehaviors
                 repositoryUser.SaveChanges();
             }
             return user;
+        }
+
+        private async Task SendResponse(ChatId chatId, IResponse response)
+        {
+            if (response.Text != null)
+                await telegramBotClient.SendTextMessageAsync(chatId, response.Text);
+            if (response.File != null)
+                await telegramBotClient.SendDocumentAsync(chatId, response.File);
         }
     }
 }

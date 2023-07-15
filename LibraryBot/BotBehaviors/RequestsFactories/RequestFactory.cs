@@ -1,5 +1,6 @@
 ﻿using LibraryBot.BotBehaviors.RequestsFactories.Requests;
 using LibraryBot.BotBehaviors.RequestsFactories.Requests.SpecificRequestsKit;
+using LibraryBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,14 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
 {
     internal class RequestFactory : IRequestFactory
     {
-        public IRequest CreateBotCommand(Message message)
+        private readonly RepositoryDocument repositoryDocument;
+
+        public RequestFactory(RepositoryDocument repositoryDocument) 
+        {  
+            this.repositoryDocument = repositoryDocument; 
+        }
+
+        public IRequest DesignRequest(Message message)
         {
             IRequest request = new Request();
             switch (message.Text)
