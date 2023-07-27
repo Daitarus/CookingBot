@@ -14,7 +14,10 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
         public const UserState userState = UserState.AddDocument;
         public IRequest DesignRequest(Message message, DataBase.User? user)
         {
+            return message.Text switch
+            {
 
+            };
         }
     }
 }

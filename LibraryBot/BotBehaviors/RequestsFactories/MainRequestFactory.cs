@@ -1,5 +1,6 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
 using LibraryBot.BotBehaviors.Requests.SpecificRequestsKit;
+using LibraryBot.BotBehaviors.RequestsFactories.RequestFactoryForUserState;
 using LibraryBot.DataBase;
 using System;
 using System.Collections.Generic;
@@ -12,50 +13,27 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
 {
     internal class MainRequestFactory : IRequestFactory
     {
-        private readonly RepositoryDocument repositoryDocument;
-
-        public MainRequestFactory(RepositoryDocument repositoryDocument) 
-        {  
-            this.repositoryDocument = repositoryDocument; 
-        }
-
         public IRequest DesignRequest(Message message, DataBase.User? user)
         {
             IRequest request = new Request();
-            switch (message.Text)
+            if(user != null)
             {
-                case AddDocumentRequest.commandValue:
-                    {
-                        request = new AddDocumentRequest();
-                        break;
-                    }
-                case GetRequest.commandValue:
-                    {
-                        request = new GetRequest();
-                        break;
-                    }
-                case DeleteCommand.commandValue:
-                    {
-                        request = new DeleteCommand();
-                        break;
-                    }
-                case AddFolderRequest.commandValue:
-                    {
-                        request = new AddFolderRequest();
-                        break;
-                    }
-                case DeleteFolderCommand.commandValue:
-                    {
-                        request = new DeleteFolderCommand();
-                        break;
-                    }
-                case PrintListRequest.commandValue:
-                    {
-                        request = new PrintListRequest();
-                        break;
-                    }
+                IRequestFactory requestFactory = GetRequestFactoryForUserState(user);
+                request = requestFactory.DesignRequest(message, user);
             }
             return request;
         }
+        private IRequestFactory GetRequestFactoryForUserState(DataBase.User user)
+        {
+            return user.State switch
+            {
+                AddDocumentRequestFactory.userState => new AddDocumentRequestFactory(),
+                AddFolderRequestFactory.userState => new AddDocumentRequestFactory(),
+                DeleteDocumentRequestFactory.userState => new DeleteDocumentRequestFactory(),
+                DeleteFolderRequestFactory.userState => new DeleteFolderRequestFactory(),
+                InitialRequestFactory.userState => new InitialRequestFactory(),
+                _ => new InitialRequestFactory()
+            };
+        }        
     }
 }

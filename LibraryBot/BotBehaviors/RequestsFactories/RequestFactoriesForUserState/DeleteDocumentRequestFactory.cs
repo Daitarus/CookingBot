@@ -9,7 +9,7 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.RequestsFactories
 {
-    internal class DeleteDocument : IRequestFactory
+    internal class DeleteDocumentRequestFactory : IRequestFactory
     {
         public const UserState userState = UserState.DeleteDocument;
         public IRequest DesignRequest(Message message, DataBase.User? user)

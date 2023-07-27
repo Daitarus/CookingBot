@@ -19,7 +19,7 @@ namespace LibraryBot.BotBehaviors
             repositoryUser = new RepositoryUser(db);
 
             RepositoryDocument repositoryDocument = new RepositoryDocument(db);
-            requestFactory = new MainRequestFactory(repositoryDocument);
+            requestFactory = new MainRequestFactory();
         }
 
         public async Task RespondForMessageAsync(Message message)

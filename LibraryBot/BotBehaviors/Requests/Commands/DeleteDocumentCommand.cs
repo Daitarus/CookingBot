@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibraryBot.BotBehaviors.Requests;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.SpecificRequestsKit
+namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class StartRequest : Request
+    internal class DeleteDocumentCommand : Request
     {
-        public const string commandValue = "/start";
+        public const string commandValue = "/delete";
+
         public override Message CreateResponse()
         {
 

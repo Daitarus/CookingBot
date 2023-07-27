@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LibraryBot.DataBase
 {
     [Table("Users")]
-    public class User : Entity
+    internal class User : Entity
     {
         [Column("IdTelegram")]
         [Required]
@@ -42,7 +42,7 @@ namespace LibraryBot.DataBase
         public bool? SupportsInlineQueries { get; set; }
 
         [Column("State")]
-        public int State { get; set; }
+        public UserState State { get; set; }
 
 
 
