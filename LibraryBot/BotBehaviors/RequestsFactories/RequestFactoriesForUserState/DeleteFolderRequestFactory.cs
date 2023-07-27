@@ -1,4 +1,6 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
+using LibraryBot.BotBehaviors.Requests.Commands;
+using LibraryBot.BotBehaviors.Requests.RequestsToCommands;
 using LibraryBot.DataBase;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,11 @@ namespace LibraryBot.BotBehaviors.RequestsFactories.RequestFactoryForUserState
         public const UserState userState = UserState.DeleteFolder;
         public IRequest DesignRequest(Message message, DataBase.User? user)
         {
-
+            return message.Text switch
+            {
+                BackCommand.commandValue => new BackCommand(),
+                _ => new DeleteFolderRequest()
+            };
         }
     }
 }
