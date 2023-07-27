@@ -74,18 +74,18 @@ namespace LibraryBot.DataBase
 
         public override bool Equals(object? obj)
         {
-            if ((obj != null) && (obj is User user))
+            if (obj != null && obj is User user)
             {
                 bool isEqual = true;
-                isEqual = isEqual && (IdTelegram == user.IdTelegram);
-                isEqual = isEqual && (IsBot == user.IsBot);
-                isEqual = isEqual && (FirstName == user.FirstName);
-                isEqual = isEqual && (LastName == user.LastName);
-                isEqual = isEqual && (UserName == user.UserName);
-                isEqual = isEqual && (LanguageCode == user.LanguageCode);
-                isEqual = isEqual && (CanJoinGroups == user.CanJoinGroups);
-                isEqual = isEqual && (CanReadAllGroupMessages == user.CanReadAllGroupMessages);
-                isEqual = isEqual && (SupportsInlineQueries == user.SupportsInlineQueries);
+                isEqual = isEqual && IdTelegram == user.IdTelegram;
+                isEqual = isEqual && IsBot == user.IsBot;
+                isEqual = isEqual && FirstName == user.FirstName;
+                isEqual = isEqual && LastName == user.LastName;
+                isEqual = isEqual && UserName == user.UserName;
+                isEqual = isEqual && LanguageCode == user.LanguageCode;
+                isEqual = isEqual && CanJoinGroups == user.CanJoinGroups;
+                isEqual = isEqual && CanReadAllGroupMessages == user.CanReadAllGroupMessages;
+                isEqual = isEqual && SupportsInlineQueries == user.SupportsInlineQueries;
 
                 return isEqual;
             }

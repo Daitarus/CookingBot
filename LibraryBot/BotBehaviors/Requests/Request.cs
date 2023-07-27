@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.RequestsFactories.Requests
+namespace LibraryBot.BotBehaviors.Requests
 {
     internal class Request : IRequest
     {

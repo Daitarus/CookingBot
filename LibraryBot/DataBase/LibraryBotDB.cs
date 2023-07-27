@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LibraryBot.DataBase.Entities.User;
+using Microsoft.EntityFrameworkCore;
 using RepositoryDB;
 
 namespace LibraryBot.DataBase

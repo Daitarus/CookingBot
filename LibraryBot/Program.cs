@@ -26,7 +26,7 @@ namespace LibraryBot
                         IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db);
                         ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
 
-                        bot.Start(telegramBotHandles.HandleUpdateAsync, telegramBotHandles.HandleErrorAsync, MainServerCycle.StopCondition);
+                        bot.Start(telegramBotHandles, MainServerCycle.StopCondition);
                     }
                 }
                 else

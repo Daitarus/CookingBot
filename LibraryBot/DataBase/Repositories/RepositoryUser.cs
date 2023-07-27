@@ -1,4 +1,5 @@
-﻿using RepositoryDB;
+﻿using LibraryBot.DataBase.Entities.User;
+using RepositoryDB;
 
 namespace LibraryBot.DataBase
 {

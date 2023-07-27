@@ -2,8 +2,8 @@
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
 using LibraryBot.BotBehaviors.RequestsFactories;
-using LibraryBot.BotBehaviors.RequestsFactories.Requests;
 using LibraryBot.BotBehaviors.Response;
+using LibraryBot.BotBehaviors.Requests;
 
 namespace LibraryBot.BotBehaviors
 {
@@ -19,7 +19,7 @@ namespace LibraryBot.BotBehaviors
             repositoryUser = new RepositoryUser(db);
 
             RepositoryDocument repositoryDocument = new RepositoryDocument(db);
-            requestFactory = new RequestFactory(repositoryDocument);
+            requestFactory = new MainRequestFactory(repositoryDocument);
         }
 
         public async Task RespondForMessageAsync(Message message)
@@ -27,7 +27,7 @@ namespace LibraryBot.BotBehaviors
             DataBase.User? user = GetUserFromMessage(message);
             user = ExchangeUserDataWithDB(user);
 
-            IRequest request = requestFactory.DesignRequest(message);
+            IRequest request = requestFactory.DesignRequest(message, user);
             IResponse response = request.CreateResponse();
 
             await SendResponse(message.Chat, response);
@@ -37,9 +37,7 @@ namespace LibraryBot.BotBehaviors
         {
             DataBase.User? user = null;
             if (message.From != null)
-            {
                 user = new DataBase.User(message.From);
-            }
             return user;
         }
 
@@ -49,9 +47,7 @@ namespace LibraryBot.BotBehaviors
             {
                 var dbUser = repositoryUser.SelectForIdTelegram(user.IdTelegram);
                 if (dbUser == null)
-                {
                     repositoryUser.Add(user);
-                }
                 else
                 {
                     if (dbUser.Equals(user))
