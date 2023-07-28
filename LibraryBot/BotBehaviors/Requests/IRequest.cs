@@ -10,6 +10,7 @@ namespace LibraryBot.BotBehaviors.Requests
 {
     internal interface IRequest
     {
+        public bool Execute();
         public IResponse CreateResponse();
     }
 }
