@@ -2,7 +2,7 @@
 using Telegram.Bot.Types;
 using LibraryBot.DataBase;
 using LibraryBot.BotBehaviors.RequestsFactories;
-using LibraryBot.BotBehaviors.Response;
+using LibraryBot.BotBehaviors.Responses;
 using LibraryBot.BotBehaviors.Requests;
 
 namespace LibraryBot.BotBehaviors
@@ -17,9 +17,7 @@ namespace LibraryBot.BotBehaviors
         {
             this.telegramBotClient = telegramBotClient;
             repositoryUser = new RepositoryUser(db);
-
-            RepositoryDocument repositoryDocument = new RepositoryDocument(db);
-            requestFactory = new MainRequestFactory();
+            requestFactory = new MainRequestFactory(db);
         }
 
         public async Task RespondForMessageAsync(Message message)
@@ -30,7 +28,7 @@ namespace LibraryBot.BotBehaviors
             IRequest request = requestFactory.DesignRequest(message, user);
             IResponse response = request.CreateResponse();
 
-            await SendResponse(message.Chat, response);
+            await response.Send(telegramBotClient, message.Chat);
         }
 
         private DataBase.User? GetUserFromMessage(Message message)
@@ -59,14 +57,6 @@ namespace LibraryBot.BotBehaviors
                 repositoryUser.SaveChanges();
             }
             return user;
-        }
-
-        private async Task SendResponse(ChatId chatId, IResponse response)
-        {
-            if (response.Text != null)
-                await telegramBotClient.SendTextMessageAsync(chatId, response.Text);
-            if (response.File != null)
-                await telegramBotClient.SendDocumentAsync(chatId, response.File);
         }
     }
 }

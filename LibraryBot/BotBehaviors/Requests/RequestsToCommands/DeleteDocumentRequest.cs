@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryBot.BotBehaviors.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace LibraryBot.BotBehaviors.Requests.RequestsToCommands
 {
     internal class DeleteDocumentRequest : Request
     {
-        public override Message CreateResponse()
+        public override IResponse CreateResponse()
         {
 
         }

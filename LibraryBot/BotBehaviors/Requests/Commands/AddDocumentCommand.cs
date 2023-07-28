@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryBot.BotBehaviors.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
     {
         public const string commandValue = "/add";
 
-        public override Message CreateResponse()
+        public AddDocumentCommand(Message message, DataBase.User user) : base(message, user) { }
+
+        public override IResponse CreateResponse()
         {
 
         }

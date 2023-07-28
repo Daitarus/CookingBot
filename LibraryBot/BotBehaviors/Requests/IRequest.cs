@@ -1,4 +1,4 @@
-﻿using LibraryBot.BotBehaviors.Response;
+﻿using LibraryBot.BotBehaviors.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

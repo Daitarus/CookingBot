@@ -11,10 +11,13 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.RequestsFactories.RequestFactoryForUserState
 {
-    internal class AddFolderRequestFactory : IRequestFactory
+    internal class AddFolderRequestFactory : RequestFactory
     {
         public const UserState userState = UserState.AddFolder;
-        public IRequest DesignRequest(Message message, DataBase.User? user)
+
+        public AddFolderRequestFactory(LibraryBotDB db) : base(db) { }
+
+        public override IRequest DesignRequest(Message message, DataBase.User? user)
         {
             return message.Text switch
             {

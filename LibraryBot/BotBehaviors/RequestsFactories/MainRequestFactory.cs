@@ -1,5 +1,4 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
-using LibraryBot.BotBehaviors.Requests.SpecificRequestsKit;
 using LibraryBot.BotBehaviors.RequestsFactories.RequestFactoryForUserState;
 using LibraryBot.DataBase;
 using System;
@@ -11,9 +10,11 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.RequestsFactories
 {
-    internal class MainRequestFactory : IRequestFactory
+    internal class MainRequestFactory : RequestFactory
     {
-        public IRequest DesignRequest(Message message, DataBase.User? user)
+        public MainRequestFactory(LibraryBotDB db) : base(db) { }
+
+        public override IRequest DesignRequest(Message message, DataBase.User? user)
         {
             IRequest request = new Request();
             if(user != null)
@@ -27,12 +28,11 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
         {
             return user.State switch
             {
-                AddDocumentRequestFactory.userState => new AddDocumentRequestFactory(),
-                AddFolderRequestFactory.userState => new AddDocumentRequestFactory(),
-                DeleteDocumentRequestFactory.userState => new DeleteDocumentRequestFactory(),
-                DeleteFolderRequestFactory.userState => new DeleteFolderRequestFactory(),
-                InitialRequestFactory.userState => new InitialRequestFactory(),
-                _ => new InitialRequestFactory()
+                AddDocumentRequestFactory.userState => new AddDocumentRequestFactory(db),
+                AddFolderRequestFactory.userState => new AddFolderRequestFactory(db),
+                DeleteDocumentRequestFactory.userState => new DeleteDocumentRequestFactory(db),
+                DeleteFolderRequestFactory.userState => new DeleteFolderRequestFactory(db),
+                _ => new InitialRequestFactory(db)
             };
         }        
     }

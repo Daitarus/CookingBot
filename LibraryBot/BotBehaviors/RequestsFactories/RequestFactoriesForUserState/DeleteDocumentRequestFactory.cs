@@ -11,10 +11,12 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.RequestsFactories
 {
-    internal class DeleteDocumentRequestFactory : IRequestFactory
+    internal class DeleteDocumentRequestFactory : RequestFactory
     {
         public const UserState userState = UserState.DeleteDocument;
-        public IRequest DesignRequest(Message message, DataBase.User? user)
+
+        public DeleteDocumentRequestFactory(LibraryBotDB db) : base(db) { }
+        public override IRequest DesignRequest(Message message, DataBase.User? user)
         {
             return message.Text switch
             {

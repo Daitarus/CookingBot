@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryBot.BotBehaviors.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
     internal class GetCommand : Request
     {
         public const string commandValue = "/get";
-        public override Message CreateResponse()
+        public override IResponse CreateResponse()
         {
 
         }

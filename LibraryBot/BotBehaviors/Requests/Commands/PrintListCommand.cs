@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryBot.BotBehaviors.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
     internal class PrintListCommand : Request
     {
         public const string commandValue = "/list";
-        public override Message CreateResponse()
+        public override IResponse CreateResponse()
         {
 
         }
