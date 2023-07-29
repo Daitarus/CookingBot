@@ -1,4 +1,5 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
+using LibraryBot.BotBehaviors.Requests.CommandArguments;
 using LibraryBot.BotBehaviors.Requests.Commands;
 using LibraryBot.BotBehaviors.Responses;
 using LibraryBot.DataBase;
@@ -42,15 +43,20 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
                 DeleteFolderCommand.commandValue => new DeleteFolderCommand(db, user),
                 GetDocumentCommand.commandValue => new GetDocumentCommand(db, user),
                 PrintListCommand.commandValue => new PrintListCommand(db, user),
-                _ => DesignRequestToCommands(message, user)
+                _ => DesignCommandArgument(message, user)
             };
         }
 
-        private UserRequest DesignRequestToCommands(Message message, DataBase.User user)
+        private UserRequest DesignCommandArgument(Message message, DataBase.User user)
         {
             return user.State switch
             {
-
+                AddDocumentCommandArgument.requiredUserState => new AddDocumentCommandArgument(message, db, user),
+                AddFolderCommandArgument.requiredUserState => new AddFolderCommandArgument(message, db, user),
+                DeleteDocumentCommandArgument.requiredUserState => new DeleteDocumentCommandArgument(message, db, user),
+                DeleteFolderCommandArgument.requiredUserState => new DeleteFolderCommandArgument(message, db, user),
+                GetDocumentCommandArgument.requiredUserState => new GetDocumentCommandArgument(message, db, user),
+                _ => new UserRequest(db, user)
             };
         }
     }
