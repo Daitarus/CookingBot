@@ -9,20 +9,13 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class DeleteDocumentCommand : Request
+    internal class DeleteDocumentCommand : UserRequest
     {
         public const string commandValue = "/delete";
 
-        public DeleteDocumentCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
-
-        public override bool Execute()
+        public DeleteDocumentCommand(LibraryBotDB db, DataBase.User user) : base(db, user)
         {
-            UserRepository userRepository = new UserRepository(db);
-            user.State = UserState.DeleteDocument;
-            db.SaveChanges();
-
-            IsExecute = true;
-            return IsExecute;
+            assignableUserState = UserState.DeleteDocument;
         }
 
         public override IResponse CreateResponse()

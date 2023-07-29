@@ -10,19 +10,12 @@ using Telegram.Bot.Types;
 namespace LibraryBot.BotBehaviors.Requests.Commands
 
 {
-    internal class GetRequestCommand : Request
+    internal class GetDocumentCommand : UserRequest
     {
         public const string commandValue = "/get";
-        public GetRequestCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
-
-        public override bool Execute()
+        public GetDocumentCommand(LibraryBotDB db, DataBase.User user) : base(db, user)
         {
-            UserRepository userRepository = new UserRepository(db);
-            user.State = UserState.GetDocument;
-            db.SaveChanges();
-
-            IsExecute = true;
-            return IsExecute;
+            assignableUserState = UserState.GetDocument;
         }
 
         public override IResponse CreateResponse()

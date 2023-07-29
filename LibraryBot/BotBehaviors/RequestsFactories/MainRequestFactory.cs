@@ -1,4 +1,5 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
+using LibraryBot.BotBehaviors.Requests.Commands;
 using LibraryBot.BotBehaviors.RequestsFactories.RequestFactoryForUserState;
 using LibraryBot.DataBase;
 using System;
@@ -19,8 +20,16 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
             IRequest request = new Request();
             if(user != null)
             {
-                IRequestFactory requestFactory = GetRequestFactoryForUserState(user);
-                request = requestFactory.DesignRequest(message, user);
+                return message.Text switch
+                {
+                    AddDocumentCommand.commandValue => new AddDocumentCommand(),
+                    AddFolderCommand.commandValue => new AddFolderCommand(),
+                    DeleteDocumentCommand.commandValue => new DeleteDocumentCommand(),
+                    DeleteFolderCommand.commandValue => new DeleteFolderCommand(),
+                    GetDocumentCommand.commandValue => new GetRequestCommand(),
+                    PrintListCommand.commandValue => new PrintListCommand(),
+                    _ => new Request()
+                };
             }
             return request;
         }

@@ -9,21 +9,15 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class AddFolderCommand : Request
+    internal class AddFolderCommand : UserRequest
     {
         public const string commandValue = "/cfolder";
 
-        public AddFolderCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
-
-        public override bool Execute()
+        public AddFolderCommand(LibraryBotDB db, DataBase.User user) : base(db, user)
         {
-            UserRepository userRepository = new UserRepository(db);
-            user.State = UserState.AddFolder;
-            db.SaveChanges();
-
-            IsExecute = true;
-            return IsExecute;
+            assignableUserState = UserState.AddFolder;
         }
+
         public override IResponse CreateResponse()
         {
             return new Response(CreateResponseText());

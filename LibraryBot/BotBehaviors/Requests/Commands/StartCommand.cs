@@ -9,23 +9,11 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class StartCommand : Request
+    internal class StartCommand : UserRequest
     {
         public const string commandValue = "/start";
 
-        public StartCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
-
-        public override bool Execute()
-        {
-            if(user.State!=UserState.Initial)
-            {
-                UserRepository userRepository = new UserRepository(db);
-                user.State = UserState.Initial;
-                userRepository.SaveChanges();
-            }
-            IsExecute = true;
-            return IsExecute;
-        }
+        public StartCommand(LibraryBotDB db, DataBase.User user) : base(db, user) { }
 
         public override IResponse CreateResponse()
         {

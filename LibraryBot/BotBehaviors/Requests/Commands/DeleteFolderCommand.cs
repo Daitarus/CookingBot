@@ -9,20 +9,13 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class DeleteFolderCommand : Request
+    internal class DeleteFolderCommand : UserRequest
     {
         public const string commandValue = "/dfolder";
 
-        public DeleteFolderCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
-
-        public override bool Execute()
+        public DeleteFolderCommand(LibraryBotDB db, DataBase.User user) : base(db, user)
         {
-            UserRepository userRepository = new UserRepository(db);
-            user.State = UserState.DeleteFolder;
-            db.SaveChanges();
-
-            IsExecute = true;
-            return IsExecute;
+            assignableUserState = UserState.DeleteFolder;
         }
 
         public override IResponse CreateResponse()

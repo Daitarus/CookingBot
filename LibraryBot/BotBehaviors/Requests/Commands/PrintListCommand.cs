@@ -9,15 +9,15 @@ using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
 {
-    internal class PrintListCommand : Request
+    internal class PrintListCommand : UserRequest
     {
         public const string commandValue = "/list";
-        public PrintListCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
+        public PrintListCommand(LibraryBotDB db, DataBase.User user) : base(db, user) { }
 
         public override bool Execute()
         {
             //TODO GetDocumentsList
-            IsExecute = true;
+            IsExecute = TryChangeUserState();
             return IsExecute;
         }
 
