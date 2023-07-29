@@ -14,7 +14,7 @@ namespace LibraryBot
                 string botToken = configValues.GetValueForKey("BotToken").GetValue();
                 string connectionString = configValues.GetValueForKey("ConnectionString").GetValue();
                 string sqlScriptPath = configValues.GetValueForKey("SQLScriptPath").GetValue();
-                string mainDirPath = configValues.GetValueForKey("MainDirPath").GetValue();
+                DirectoryInfo mainDirectoryInfo = new DirectoryInfo(configValues.GetValueForKey("MainDirPath").GetValue());
 
                 string createTablesScript = LibraryBotDB.GetSqlScript(sqlScriptPath);
                 if(LibraryBotDB.CheckOrCreateDB(connectionString, createTablesScript))
@@ -23,7 +23,7 @@ namespace LibraryBot
                     {
                         TelegramBot bot = new TelegramBot(botToken);
 
-                        IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db);
+                        IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db, mainDirectoryInfo);
                         ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
 
                         bot.Start(telegramBotHandles, MainServerCycle.StopCondition);

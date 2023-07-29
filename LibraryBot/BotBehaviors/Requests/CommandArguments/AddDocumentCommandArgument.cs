@@ -12,7 +12,8 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
     internal class AddDocumentCommandArgument : CommandArgument
     {
         public const UserState requiredUserState = UserState.AddDocument;
-        public AddDocumentCommandArgument(Message message, LibraryBotDB db, DataBase.User user) : base(message, db, user) { }
+        public AddDocumentCommandArgument(Message message, LibraryBotDB db, DataBase.User user, DirectoryInfo mainDirectoryInfo) 
+            : base(message, db, user, mainDirectoryInfo) { }
 
         public override bool Execute()
         {

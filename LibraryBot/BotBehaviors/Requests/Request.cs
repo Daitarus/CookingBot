@@ -9,11 +9,11 @@ namespace LibraryBot.BotBehaviors.Requests
 {
     internal class Request : IRequest
     {
-        public bool IsExecute { get; protected set; } = false;
+        public bool IsExecuted { get; protected set; } = false;
 
         public virtual bool Execute()
         {
-            return IsExecute;
+            return IsExecuted;
         }
 
         public virtual IResponse CreateResponse()

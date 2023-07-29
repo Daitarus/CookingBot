@@ -12,13 +12,19 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
     internal class PrintListCommand : UserRequest
     {
         public const string commandValue = "/list";
-        public PrintListCommand(LibraryBotDB db, DataBase.User user) : base(db, user) { }
+
+        private DirectoryInfo mainDirectoryInfo;
+
+        public PrintListCommand(LibraryBotDB db, DataBase.User user, DirectoryInfo mainDirectoryInfo) : base(db, user) 
+        {
+            this.mainDirectoryInfo = mainDirectoryInfo;
+        }
 
         public override bool Execute()
         {
             //TODO GetDocumentsList
-            IsExecute = TryChangeUserState();
-            return IsExecute;
+            IsExecuted = TryChangeUserState();
+            return IsExecuted;
         }
 
         public override IResponse CreateResponse()

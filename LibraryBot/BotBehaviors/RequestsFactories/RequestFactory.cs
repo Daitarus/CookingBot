@@ -1,7 +1,6 @@
 ﻿using LibraryBot.BotBehaviors.Requests;
 using LibraryBot.BotBehaviors.Requests.CommandArguments;
 using LibraryBot.BotBehaviors.Requests.Commands;
-using LibraryBot.BotBehaviors.Responses;
 using LibraryBot.DataBase;
 using System;
 using System.Collections.Generic;
@@ -14,11 +13,13 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
 {
     internal class RequestFactory : IRequestFactory
     {
-        protected LibraryBotDB db;
+        private LibraryBotDB db;
+        private DirectoryInfo mainDirectoryInfo;
 
-        public RequestFactory(LibraryBotDB db)
+        public RequestFactory(LibraryBotDB db, DirectoryInfo mainDirectoryInfo)
         {
             this.db = db;
+            this.mainDirectoryInfo = mainDirectoryInfo;
         }
 
         public IRequest DesignRequest(Message message, DataBase.User? user)
@@ -42,7 +43,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
                 DeleteDocumentCommand.commandValue => new DeleteDocumentCommand(db, user),
                 DeleteFolderCommand.commandValue => new DeleteFolderCommand(db, user),
                 GetDocumentCommand.commandValue => new GetDocumentCommand(db, user),
-                PrintListCommand.commandValue => new PrintListCommand(db, user),
+                PrintListCommand.commandValue => new PrintListCommand(db, user, mainDirectoryInfo),
                 _ => DesignCommandArgument(message, user)
             };
         }
@@ -51,11 +52,11 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
         {
             return user.State switch
             {
-                AddDocumentCommandArgument.requiredUserState => new AddDocumentCommandArgument(message, db, user),
-                AddFolderCommandArgument.requiredUserState => new AddFolderCommandArgument(message, db, user),
-                DeleteDocumentCommandArgument.requiredUserState => new DeleteDocumentCommandArgument(message, db, user),
-                DeleteFolderCommandArgument.requiredUserState => new DeleteFolderCommandArgument(message, db, user),
-                GetDocumentCommandArgument.requiredUserState => new GetDocumentCommandArgument(message, db, user),
+                AddDocumentCommandArgument.requiredUserState => new AddDocumentCommandArgument(message, db, user, mainDirectoryInfo),
+                AddFolderCommandArgument.requiredUserState => new AddFolderCommandArgument(message, db, user, mainDirectoryInfo),
+                DeleteDocumentCommandArgument.requiredUserState => new DeleteDocumentCommandArgument(message, db, user, mainDirectoryInfo),
+                DeleteFolderCommandArgument.requiredUserState => new DeleteFolderCommandArgument(message, db, user, mainDirectoryInfo),
+                GetDocumentCommandArgument.requiredUserState => new GetDocumentCommandArgument(message, db, user, mainDirectoryInfo),
                 _ => new UserRequest(db, user)
             };
         }

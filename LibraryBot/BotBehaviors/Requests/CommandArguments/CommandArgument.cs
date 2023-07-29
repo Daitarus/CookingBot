@@ -11,11 +11,13 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
     internal abstract class CommandArgument : UserRequest
     {
         protected Message message;
-        public CommandArgument(Message message, LibraryBotDB db, DataBase.User user) : base (db, user)
+        protected DirectoryInfo mainDirectoryInfo;
+        public CommandArgument(Message message, LibraryBotDB db, DataBase.User user, DirectoryInfo mainDirectoryInfo) : base (db, user)
         {
             if(message == null) throw new ArgumentNullException (nameof(message));
 
             this.message = message;
+            this.mainDirectoryInfo = mainDirectoryInfo;
             assignableUserState = UserState.Initial;
         }
     }

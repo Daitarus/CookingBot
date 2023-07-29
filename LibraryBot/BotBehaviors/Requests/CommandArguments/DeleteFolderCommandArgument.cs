@@ -12,7 +12,8 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
     internal class DeleteFolderCommandArgument : CommandArgument
     {
         public const UserState requiredUserState = UserState.DeleteFolder;
-        public DeleteFolderCommandArgument(Message message, LibraryBotDB db, DataBase.User user) : base(message, db, user) { }
+        public DeleteFolderCommandArgument(Message message, LibraryBotDB db, DataBase.User user, DirectoryInfo mainDirectoryInfo) 
+            : base(message, db, user, mainDirectoryInfo) { }
 
         public override bool Execute()
         {

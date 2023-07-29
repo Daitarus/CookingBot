@@ -13,11 +13,11 @@ namespace LibraryBot.BotBehaviors
         private LibraryBotDB db;
         private IRequestFactory requestFactory;
 
-        public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBotDB db)
+        public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBotDB db, DirectoryInfo mainDirectoryInfo)
         {
             this.telegramBotClient = telegramBotClient;
             this.db = db;
-            requestFactory = new RequestFactory(db);
+            requestFactory = new RequestFactory(db, mainDirectoryInfo);
         }
 
         public async Task RespondForMessageAsync(Message message)

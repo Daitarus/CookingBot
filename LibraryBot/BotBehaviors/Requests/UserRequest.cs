@@ -27,8 +27,8 @@ namespace LibraryBot.BotBehaviors.Requests
 
         public override bool Execute()
         {
-            IsExecute = TryChangeUserState();
-            return IsExecute;
+            IsExecuted = TryChangeUserState();
+            return IsExecuted;
         }
 
         protected bool TryChangeUserState()
