@@ -24,7 +24,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
                 AddFolderCommand.commandValue => new AddFolderCommand(),
                 DeleteDocumentCommand.commandValue => new DeleteDocumentCommand(),
                 DeleteFolderCommand.commandValue => new DeleteFolderCommand(),
-                GetCommand.commandValue => new GetCommand(),
+                GetRequestCommand.commandValue => new GetRequestCommand(),
                 PrintListCommand.commandValue => new PrintListCommand(),
                 _ => new Request()
             };

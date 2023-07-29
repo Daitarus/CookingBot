@@ -8,21 +8,19 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
 namespace LibraryBot.BotBehaviors.Requests.Commands
-{
-    internal class StartCommand : Request
-    {
-        public const string commandValue = "/start";
 
-        public StartCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
+{
+    internal class GetRequestCommand : Request
+    {
+        public const string commandValue = "/get";
+        public GetRequestCommand(LibraryBotDB db, Message message, DataBase.User user) : base(db, message, user) { }
 
         public override bool Execute()
         {
-            if(user.State!=UserState.Initial)
-            {
-                UserRepository userRepository = new UserRepository(db);
-                user.State = UserState.Initial;
-                userRepository.SaveChanges();
-            }
+            UserRepository userRepository = new UserRepository(db);
+            user.State = UserState.GetDocument;
+            db.SaveChanges();
+
             IsExecute = true;
             return IsExecute;
         }
@@ -36,14 +34,7 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
         private string CreateResponseText()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Hello ");
-
-            if (user.UserName != null)
-                stringBuilder.Append(user.UserName);
-            else
-                stringBuilder.Append(user.FirstName);
-
-            stringBuilder.Append("! ! Wellcome to bot.");
+            stringBuilder.Append("Send the path to the document you are receiving.\n");
             return stringBuilder.ToString();
         }
     }

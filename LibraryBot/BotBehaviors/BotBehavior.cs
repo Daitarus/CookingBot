@@ -10,13 +10,13 @@ namespace LibraryBot.BotBehaviors
     internal class BotBehavior : IBotBehavior
     {
         private readonly ITelegramBotClient telegramBotClient;
-        private readonly RepositoryUser repositoryUser;
+        private readonly UserRepository repositoryUser;
         private IRequestFactory requestFactory;
 
         public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBotDB db)
         {
             this.telegramBotClient = telegramBotClient;
-            repositoryUser = new RepositoryUser(db);
+            repositoryUser = new UserRepository(db);
             requestFactory = new MainRequestFactory(db);
         }
 

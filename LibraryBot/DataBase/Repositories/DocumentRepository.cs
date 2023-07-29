@@ -2,10 +2,10 @@
 
 namespace LibraryBot.DataBase
 {
-    internal class RepositoryDocument : Repository<Document>
+    internal class DocumentRepository : Repository<Document>
     {
         private LibraryBotDB libraryBotDB;
-        public RepositoryDocument(RepositoryDB.DataBase db) : base(db) 
+        public DocumentRepository(RepositoryDB.DataBase db) : base(db) 
         {
             libraryBotDB = (LibraryBotDB)db;
         }

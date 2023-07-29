@@ -1,12 +1,11 @@
-﻿using LibraryBot.DataBase.Entities.User;
-using RepositoryDB;
+﻿using RepositoryDB;
 
 namespace LibraryBot.DataBase
 {
-    internal class RepositoryUser : Repository<User>
+    internal class UserRepository : Repository<User>
     {
         private LibraryBotDB libraryBotDB;
-        public RepositoryUser(RepositoryDB.DataBase db) : base(db) 
+        public UserRepository(RepositoryDB.DataBase db) : base(db) 
         {
             libraryBotDB = (LibraryBotDB)db;
         }

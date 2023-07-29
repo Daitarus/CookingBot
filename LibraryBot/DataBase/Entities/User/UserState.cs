@@ -12,6 +12,7 @@ namespace LibraryBot.DataBase
         AddDocument = 1,
         DeleteDocument = 2,
         AddFolder = 3, 
-        DeleteFolder = 4
+        DeleteFolder = 4,
+        GetDocument = 5
     }
 }
