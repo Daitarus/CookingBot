@@ -10,14 +10,14 @@ namespace LibraryBot.BotBehaviors
     internal class BotBehavior : IBotBehavior
     {
         private readonly ITelegramBotClient telegramBotClient;
-        private readonly UserRepository repositoryUser;
+        private LibraryBotDB db;
         private IRequestFactory requestFactory;
 
         public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBotDB db)
         {
             this.telegramBotClient = telegramBotClient;
-            repositoryUser = new UserRepository(db);
-            requestFactory = new MainRequestFactory(db);
+            this.db = db;
+            requestFactory = new RequestFactory(db);
         }
 
         public async Task RespondForMessageAsync(Message message)
@@ -43,6 +43,7 @@ namespace LibraryBot.BotBehaviors
         {
             if (user != null)
             {
+                UserRepository repositoryUser = new UserRepository(db);
                 var dbUser = repositoryUser.SelectForIdTelegram(user.IdTelegram);
                 if (dbUser == null)
                     repositoryUser.Add(user);
