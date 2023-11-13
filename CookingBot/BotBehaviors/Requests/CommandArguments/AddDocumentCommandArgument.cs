@@ -18,11 +18,30 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
 
         public override bool Execute()
         {
-            
+            IsExecuted = base.Execute();
+
+            //TODO Add document to DB and to storage
+
+            return IsExecuted;
         }
         public override IResponse CreateResponse()
         {
+            return new Response(CreateResponseText());
+        }
 
+        //TODO Get ResponseText from file
+        private string CreateResponseText()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (IsExecuted)
+            {
+                stringBuilder.Append("Document has been added.\n");
+            }
+            else
+            {
+                stringBuilder.Append("Error: Document was not added!\n");
+            }
+            return stringBuilder.ToString();
         }
     }
 }

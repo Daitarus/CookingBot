@@ -12,7 +12,7 @@ namespace LibraryBot.BotBehaviors.Requests
 {
     internal class UserRequest : Request
     {
-        public  UserState assignableUserState { get; protected set; } = UserState.Initial;
+        public UserState assignableUserState { get; protected set; } = UserState.Initial;
 
         protected CookingBotDB db;
         protected User user;

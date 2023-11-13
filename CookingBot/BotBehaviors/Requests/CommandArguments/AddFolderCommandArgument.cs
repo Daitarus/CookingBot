@@ -18,11 +18,25 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
 
         public override bool Execute()
         {
+            IsExecuted = base.Execute();
 
+            //TODO create folder to storage
+
+            return IsExecuted;
         }
         public override IResponse CreateResponse()
         {
+            return new Response(CreateResponseText());
+        }
 
+        //TODO Get ResponseText from file
+        private string CreateResponseText()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Send the path to the document you are creating.\n");
+            stringBuilder.Append("(Not created folders specified in the path will be created)\n");
+            return stringBuilder.ToString();
+        }
         }
     }
 }
