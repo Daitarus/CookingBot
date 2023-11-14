@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CookingBotDB.Entities.Base;
 
 namespace CookingBotDB.Entities
 {
     [Table("Recipes")]
-    public class Recipe : Entity
+    public class Recipe
     {
+        [Column("id"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Column("name"), MaxLength(50), Required]
         public string Name { get; set; }
 

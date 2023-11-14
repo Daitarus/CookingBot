@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CookingBotDB.Entities.Base;
 
 namespace CookingBotDB.Entities
 {
     [Table("Users")]
-    public class User : Entity
+    public class User
     {
+        [Column("id"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Column("telegram_id"), Required]
         public long TelegramId { get; set; }
 
