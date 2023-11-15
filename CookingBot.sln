@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigHandler", "ConfigHand
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBot", "CookingBot\CookingBot.csproj", "{558180F6-152C-4C27-BAE3-C793ED9D1DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingBotDB", "CookingBotDB\CookingBotDB.csproj", "{F28AD5F9-FC83-4D24-8996-EC66FBA04297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBotDB", "CookingBotDB\CookingBotDB.csproj", "{F28AD5F9-FC83-4D24-8996-EC66FBA04297}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDB", "TestDB\TestDB.csproj", "{C8DF0983-4D5E-43C6-8248-AD41BB127BB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C7B1C891-F6D8-46BC-B2EE-80D4DD19E5CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8DF0983-4D5E-43C6-8248-AD41BB127BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8DF0983-4D5E-43C6-8248-AD41BB127BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8DF0983-4D5E-43C6-8248-AD41BB127BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8DF0983-4D5E-43C6-8248-AD41BB127BB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C8DF0983-4D5E-43C6-8248-AD41BB127BB8} = {C7B1C891-F6D8-46BC-B2EE-80D4DD19E5CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E57CACE-1EA7-4297-9030-BF567412C853}

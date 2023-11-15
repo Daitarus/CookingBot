@@ -8,6 +8,7 @@ namespace CookingBotDB.Entities
     {
         [Column("id"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Column("telegram_id"), Required]
         public long TelegramId { get; set; }
 
@@ -38,7 +39,7 @@ namespace CookingBotDB.Entities
         [Column("state", TypeName = "int")]
         public UserState State { get; set; }
 
-
+        public User() { }
         public User(Telegram.Bot.Types.User user)
         {
             TelegramId = user.Id;
