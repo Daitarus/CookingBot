@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CookingBotDB.DbEnums;
+using Microsoft.EntityFrameworkCore;
 
-namespace CookingBotDB
+namespace CookingBotDB.Contexts
 {
     public static class DbContextOptionFactory
     {

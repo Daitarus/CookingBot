@@ -1,7 +1,7 @@
 ﻿using CookingBotDB.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CookingBotDB
+namespace CookingBotDB.Contexts
 {
     public class MainContext : DbContext
     {
@@ -10,7 +10,7 @@ namespace CookingBotDB
         public DbSet<SimpleUser> SimpleUsers { get; set; }
         public DbSet<SimpleRecipe> SimpleRecipes { get; set; }
 
-        public MainContext(DbContextOptions<MainContext> options) : base(options) 
+        public MainContext(DbContextOptions<MainContext> options) : base(options)
         {
 
         }

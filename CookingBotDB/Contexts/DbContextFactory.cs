@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace CookingBotDB
+namespace CookingBotDB.Contexts
 {
     public class DbContextFactory
     {

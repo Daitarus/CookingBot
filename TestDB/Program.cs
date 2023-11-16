@@ -1,6 +1,6 @@
-﻿using CookingBotDB;
+﻿using CookingBotDB.Contexts;
+using CookingBotDB.DbEnums;
 using CookingBotDB.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace TestDB
 {
@@ -8,10 +8,12 @@ namespace TestDB
     {
         static void Main(string[] args)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             string connectionStringPostgre = "Server = localhost; Port=5432; Database = CookingBot; UserId = cookingBot; Password = cookingBot";
             string connectionStringMSSQL = "server = localhost; database = CookingBot; user = cookingBot; password = cookingBot; TrustServerCertificate=True";
 
-            var contextOptions = DbContextOptionFactory.Create(connectionStringPostgre, DbType.PostgreSQL, TimeSpan.FromSeconds(30));
+            var contextOptions = DbContextOptionFactory.Create(connectionStringMSSQL, DbType.MSSQL, TimeSpan.FromSeconds(30));
             var contextFactory = new DbContextFactory(contextOptions);
 
             WorkingWithDB(contextFactory);
