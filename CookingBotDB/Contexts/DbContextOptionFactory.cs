@@ -1,5 +1,4 @@
-﻿using CookingBotDB.DbEnums;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace CookingBotDB.Contexts
 {
