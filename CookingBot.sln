@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryDB", "RepositoryDB\RepositoryDB.csproj", "{A6F0C859-2F04-421E-BBE7-F68158EF9009}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigHandler", "ConfigHandler\ConfigHandler.csproj", "{CA2E4019-24C3-4657-B6E5-B2B9FFA9B853}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBot", "CookingBot\CookingBot.csproj", "{558180F6-152C-4C27-BAE3-C793ED9D1DB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBotDB", "CookingBotDB\CookingBotDB.csproj", "{F28AD5F9-FC83-4D24-8996-EC66FBA04297}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C7B1C891-F6D8-46BC-B2EE-80D4DD19E5CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramService", "TelegramService\TelegramService.csproj", "{6B98A819-A474-41B1-9BEF-25418C50B5D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A6F0C859-2F04-421E-BBE7-F68158EF9009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6F0C859-2F04-421E-BBE7-F68158EF9009}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6F0C859-2F04-421E-BBE7-F68158EF9009}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6F0C859-2F04-421E-BBE7-F68158EF9009}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA2E4019-24C3-4657-B6E5-B2B9FFA9B853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA2E4019-24C3-4657-B6E5-B2B9FFA9B853}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA2E4019-24C3-4657-B6E5-B2B9FFA9B853}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA2E4019-24C3-4657-B6E5-B2B9FFA9B853}.Release|Any CPU.Build.0 = Release|Any CPU
 		{558180F6-152C-4C27-BAE3-C793ED9D1DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{558180F6-152C-4C27-BAE3-C793ED9D1DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{558180F6-152C-4C27-BAE3-C793ED9D1DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +25,10 @@ Global
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F28AD5F9-FC83-4D24-8996-EC66FBA04297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B98A819-A474-41B1-9BEF-25418C50B5D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B98A819-A474-41B1-9BEF-25418C50B5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B98A819-A474-41B1-9BEF-25418C50B5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B98A819-A474-41B1-9BEF-25418C50B5D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

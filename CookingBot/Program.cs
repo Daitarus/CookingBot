@@ -1,10 +1,8 @@
-﻿using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors;
-using ConfigHandler;
+﻿using LibraryBot.BotBehaviors;
 using Microsoft.Extensions.Configuration;
 using CookingBot.Settings;
 
-namespace LibraryBot
+namespace CookingBot
 {
     public class Program
     {
@@ -15,7 +13,6 @@ namespace LibraryBot
 
             DirectoryInfo mainDirectoryInfo = new DirectoryInfo(configValues.GetValueForKey("MainDirPath").GetValue());
 
-            string createTablesScript = LibraryBot.DataBase.CookingBotDB.GetSqlScript(sqlScriptPath);
             using (var db = new LibraryBot.DataBase.CookingBotDB(connectionString))
             {
                 TelegramBot bot = new TelegramBot(botToken);

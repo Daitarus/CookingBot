@@ -1,17 +1,17 @@
-﻿using LibraryBot.BotBehaviors;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using TelegramService.Interfaces;
 
-namespace LibraryBot
+namespace TelegramService
 {
-    public sealed class BotHandles : ITelegramBotHandles
+    public sealed class BotHandlers : ITelegramBotHandlers
     {
-        private IBotBehavior botBehavior;
+        private IBotBehavior _botBehavior;
 
-        public BotHandles(IBotBehavior botBehavior)
+        public BotHandlers(IBotBehavior botBehavior)
         {
-            this.botBehavior = botBehavior;
+            _botBehavior = botBehavior;
         }
 
         public async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace LibraryBot
             //TODO: write action in DB
             if ((update.Type == UpdateType.Message) && (update.Message != null))
             {
-                await botBehavior.RespondForMessageAsync(update.Message);
+                await _botBehavior.RespondForMessageAsync(update.Message);
             }
         }
         public async Task HandleErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)

@@ -15,9 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConfigHandler\ConfigHandler.csproj" />
     <ProjectReference Include="..\CookingBotDB\CookingBotDB.csproj" />
-    <ProjectReference Include="..\RepositoryDB\RepositoryDB.csproj" />
+    <ProjectReference Include="..\TelegramService\TelegramService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsetting.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsetting_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>
