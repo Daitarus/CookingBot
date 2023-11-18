@@ -1,6 +1,6 @@
 ﻿namespace CookingBotDB.Contexts
 {
-    public enum DbType
+    public enum DatabaseType
     {
         MSSQL = 0,
         PostgreSQL = 1

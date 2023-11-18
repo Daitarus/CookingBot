@@ -1,0 +1,9 @@
+{
+  "BotToken": "SomeToken",
+  "DbInitOption": {
+    "ConnectionString": "server = localhost; database = CookingBot; user = cookingBot; password = cookingBot;",
+    //"ConnectionString": "Host=localhost;Port=5432;Database=CookingBot;Username=cookingBot;Password=cookingBot"
+    "DbType": "MSSQL",
+    "Logging": false
+  }
+}

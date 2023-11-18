@@ -13,7 +13,7 @@ namespace LibraryBot.BotBehaviors
         private CookingBotDB db;
         private IRequestFactory requestFactory;
 
-        public BotBehavior(ITelegramBotClient telegramBotClient, CookingBotDB db, DirectoryInfo mainDirectoryInfo)
+        public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBot.DataBase.CookingBotDB db, DirectoryInfo mainDirectoryInfo)
         {
             this.telegramBotClient = telegramBotClient;
             this.db = db;

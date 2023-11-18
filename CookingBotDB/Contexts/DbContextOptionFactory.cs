@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CookingBotDB.Contexts
 {
     public static class DbContextOptionFactory
     {
-        public static DbContextOptions<MainContext> Create(string connectionString, DbType dbType, TimeSpan commandTimeout)
+        public static DbContextOptions<MainContext> Create(string connectionString, DatabaseType dbType, TimeSpan commandTimeout, ILogger? logger = null)
         {
             var dbContextOptionBuilder = new DbContextOptionsBuilder<MainContext>();
 
             switch (dbType)
             {
-                case DbType.MSSQL:
+                case DatabaseType.MSSQL:
                     dbContextOptionBuilder.UseSqlServer(connectionString,
                         optionsBuilder => optionsBuilder
                                 .CommandTimeout((int)commandTimeout.TotalSeconds)
@@ -18,7 +19,7 @@ namespace CookingBotDB.Contexts
                                 .EnableRetryOnFailure()
                         );
                     break;
-                case DbType.PostgreSQL:
+                case DatabaseType.PostgreSQL:
                     dbContextOptionBuilder.UseNpgsql(connectionString,
                         optionsBuilder => optionsBuilder
                                 .CommandTimeout((int)commandTimeout.TotalSeconds)
@@ -26,6 +27,16 @@ namespace CookingBotDB.Contexts
                                 .EnableRetryOnFailure()
                         );
                     break;
+            }
+
+            if (logger != null)
+            {
+                //TODO add logger to DB
+
+                //dbContextOptionBuilder.UseLoggerFactory(LoggerFactory.Create(builder =>
+                //{
+                //    builder.AddProvider(new PhxDBLoggerProvider(logger));
+                //}));
             }
 
             return dbContextOptionBuilder.Options;
