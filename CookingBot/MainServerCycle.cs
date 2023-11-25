@@ -1,4 +1,4 @@
-﻿namespace LibraryBot
+﻿namespace CookingBot
 {
     internal static class MainServerCycle
     {

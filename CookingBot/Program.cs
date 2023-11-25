@@ -1,6 +1,7 @@
-﻿using LibraryBot.BotBehaviors;
+﻿using CookingBot.BotBehaviors;
 using Microsoft.Extensions.Configuration;
 using CookingBot.Settings;
+using CookingBotDB.Contexts;
 
 namespace CookingBot
 {
@@ -11,17 +12,15 @@ namespace CookingBot
             var config = GetConfiguration();
             var appsetting = config.Get<Appsetting>();
 
-            DirectoryInfo mainDirectoryInfo = new DirectoryInfo(configValues.GetValueForKey("MainDirPath").GetValue());
+            var dbContextOption = DbContextOptionFactory.Create(appsetting.DbInitOption, appsetting.CommanTimeout);
+            var dbContextFactory = new DbContextFactory(dbContextOption);
 
-            using (var db = new LibraryBot.DataBase.CookingBotDB(connectionString))
-            {
-                TelegramBot bot = new TelegramBot(botToken);
+            TelegramBot bot = new TelegramBot(botToken);
 
-                IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db, mainDirectoryInfo);
-                ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
+            IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db, mainDirectoryInfo);
+            ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
 
-                bot.Start(telegramBotHandles, MainServerCycle.StopCondition);
-            }
+            bot.Start(telegramBotHandles, MainServerCycle.StopCondition);
         }
 
         private static IConfigurationRoot GetConfiguration()
