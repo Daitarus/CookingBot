@@ -9,5 +9,6 @@ namespace CookingBot.Settings
         public const string AppsettingName = "Appsetting";
         public string BotToken {  get; set; }
         public DbInitOption DbInitOption {  get; set; }
+        public TimeSpan CommanTimeout { get; set; }
     }
 }
