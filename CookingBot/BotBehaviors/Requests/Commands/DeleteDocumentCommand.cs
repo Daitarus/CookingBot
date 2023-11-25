@@ -1,6 +1,6 @@
 ﻿using CookingBot.DataBase.Entities;
-using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.DataBase;
+using CookingBot.BotBehaviors.Responses;
+using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.Commands
+namespace CookingBot.BotBehaviors.Requests.Commands
 {
     internal class DeleteDocumentCommand : UserRequest
     {
@@ -16,7 +16,7 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
 
         public DeleteDocumentCommand(CookingBotDB db, CookingBot.DataBase.Entities.User user) : base(db, user)
         {
-            assignableUserState = UserState.DeleteDocument;
+            _assignableUserState = UserState.DeleteDocument;
         }
 
         public override IResponse CreateResponse()

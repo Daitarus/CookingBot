@@ -1,60 +1,45 @@
-﻿using CookingBot.DataBase.Entities;
-using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.DataBase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot.Requests.Abstractions;
+﻿using CookingBot.BotBehaviors.Requests.Interfaces;
+using CookingBot.BotBehaviors.Responses;
+using CookingBotDB.Contexts;
+using CookingBotDB.Entities;
 
-namespace LibraryBot.BotBehaviors.Requests
+namespace CookingBot.BotBehaviors.Requests
 {
-    internal class UserRequest : Request
+    public class UserRequest : IRequest
     {
-        public UserState assignableUserState { get; protected set; } = UserState.Initial;
+        const UserState _assignableUserState = UserState.Initial;
 
-        protected CookingBotDB db;
-        protected User user;
+        private DbContextFactory _dbContextFacoty;
+        private User _user;
 
-        public UserRequest(CookingBotDB db, User user)
+        public UserRequest(DbContextFactory dbContextFacoty, User user)
         {
-            if(db == null) throw new ArgumentNullException(nameof(db));
-            if (user == null) throw new ArgumentNullException(nameof(user));
+            if(dbContextFacoty == null) 
+                throw new ArgumentNullException(nameof(dbContextFacoty));
+            if (user == null) 
+                throw new ArgumentNullException(nameof(user));
 
-            this.db = db;
-            this.user = user;
+            _dbContextFacoty = dbContextFacoty;
+
+            _user = user;
+            _user.State = _assignableUserState;
         }
 
-        public override bool Execute()
+        public void Execute()
         {
-            IsExecuted = TryChangeUserState();
-            return IsExecuted;
-        }
-
-        protected bool TryChangeUserState()
-        {
-            user.State = assignableUserState;
-            return TrySaveUser();
-        }
-        private bool TrySaveUser()
-        {
-            UserRepository userRepository = new UserRepository(db);
-            try
+            using (var context = _dbContextFacoty.Create())
             {
-                userRepository.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //TODO log ex
-                return false;
+                var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
+
+                user = _user;
+
+                context.SaveChanges();
             }
         }
 
-        public override IResponse CreateResponse()
+        public IResponse CreateResponse()
         {
-            return new Response("Sorry, but your request was not recognized.");
+            return new Response("Sorry, but this request is not defined.");
         }
     }
 }

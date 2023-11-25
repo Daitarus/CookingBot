@@ -1,45 +1,57 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
-using LibraryBot.DataBase;
-using LibraryBot.BotBehaviors.RequestsFactories;
-using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.BotBehaviors.Requests;
+using CookingBot.BotBehaviors.Requests;
+using CookingBot.BotBehaviors.Responses;
+using TelegramService.Interfaces;
+using CookingBotDB.Contexts;
+using Microsoft.Extensions.Logging;
+using CookingBot.BotBehaviors.Requests.Interfaces;
 
-namespace LibraryBot.BotBehaviors
+namespace CookingBot.BotBehaviors
 {
     internal class BotBehavior : IBotBehavior
     {
-        private readonly ITelegramBotClient telegramBotClient;
-        private CookingBotDB db;
-        private IRequestFactory requestFactory;
+        private ITelegramBotClient _telegramBotClient;
+        private IRequestFactory _requestFactory;
+        private DbContextFactory _dbContextFactory;
+        private ILogger _logger;
 
-        public BotBehavior(ITelegramBotClient telegramBotClient, LibraryBot.DataBase.CookingBotDB db, DirectoryInfo mainDirectoryInfo)
+        public BotBehavior(ITelegramBotClient telegramBotClient, DbContextFactory dbContextFactory, ILogger logger)
         {
-            this.telegramBotClient = telegramBotClient;
-            this.db = db;
-            requestFactory = new RequestFactory(db, mainDirectoryInfo);
+            _telegramBotClient = telegramBotClient;
+            _requestFactory = new RequestFactory(dbContextFactory);
+            _dbContextFactory = dbContextFactory;
+            _logger = logger;
         }
 
         public async Task RespondForMessageAsync(Message message)
         {
-            CookingBot.DataBase.Entities.User? user = GetUserFromMessage(message);
+            if(message == null) 
+                throw new ArgumentNullException(nameof(message));
+
+            CookingBotDB.Entities.User? user = default;
+            if(message.From != null)
+                user = new CookingBotDB.Entities.User(message.From);
+
             user = ExchangeUserDataWithDB(user);
 
-            IRequest request = requestFactory.DesignRequest(message, user);
+            IRequest request = _requestFactory.DesignRequest(message, user);
             IResponse response = request.CreateResponse();
 
-            await response.Send(telegramBotClient, message.Chat);
+            await response.Send(_telegramBotClient, message.Chat);
         }
 
-        private CookingBot.DataBase.Entities.User? GetUserFromMessage(Message message)
+        private CookingBotDB.Entities.User? GetUserFromMessage(Message message)
         {
-            CookingBot.DataBase.Entities.User? user = null;
+            CookingBotDB.Entities.User? user = null;
+
             if (message.From != null)
                 user = new DataBase.User(message.From);
+
             return user;
         }
 
-        private CookingBot.DataBase.Entities.User? ExchangeUserDataWithDB(CookingBot.DataBase.Entities.User? user)
+        private CookingBotDB.Entities.User? ExchangeUserDataWithDB(CookingBotDB.Entities.User? user)
         {
             if (user != null)
             {

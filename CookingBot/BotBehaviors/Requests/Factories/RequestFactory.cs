@@ -1,28 +1,21 @@
-﻿using LibraryBot.BotBehaviors.Requests;
-using LibraryBot.BotBehaviors.Requests.CommandArguments;
-using LibraryBot.BotBehaviors.Requests.Commands;
-using LibraryBot.DataBase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CookingBot.BotBehaviors.Requests.CommandArguments;
+using CookingBot.BotBehaviors.Requests.Commands;
+using CookingBot.BotBehaviors.Requests.Interfaces;
+using CookingBotDB.Contexts;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.RequestsFactories
+namespace CookingBot.BotBehaviors.Requests.Factories
 {
-    internal class RequestFactory : IRequestFactory
+    public class RequestFactory : IRequestFactory
     {
-        private CookingBotDB db;
-        private DirectoryInfo mainDirectoryInfo;
+        private DbContextFactory _dbContextFactory;
 
-        public RequestFactory(CookingBotDB db, DirectoryInfo mainDirectoryInfo)
+        public RequestFactory(DbContextFactory dbContextFactory)
         {
-            this.db = db;
-            this.mainDirectoryInfo = mainDirectoryInfo;
+            _dbContextFactory = dbContextFactory;
         }
 
-        public IRequest DesignRequest(Message message, CookingBot.DataBase.Entities.User? user)
+        public IRequest Create(Message message, CookingBot.DataBase.Entities.User? user)
         {
             IRequest request = new Request();
             if (user != null)
@@ -34,7 +27,7 @@ namespace LibraryBot.BotBehaviors.RequestsFactories
 
         private UserRequest DesignUserRequest(Message message, CookingBot.DataBase.Entities.User user)
         {
-            if(user == null) throw new ArgumentNullException(nameof(user));
+            if (user == null) throw new ArgumentNullException(nameof(user));
 
             return message.Text switch
             {

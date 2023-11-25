@@ -1,5 +1,5 @@
-﻿using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.DataBase;
+﻿using CookingBot.BotBehaviors.Responses;
+using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.Commands
+namespace CookingBot.BotBehaviors.Requests.Commands
 {
     internal class StartCommand : UserRequest
     {
@@ -26,10 +26,10 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("Hello ");
 
-            if (user.UserName != null)
-                stringBuilder.Append(user.UserName);
+            if (_user.UserName != null)
+                stringBuilder.Append(_user.UserName);
             else
-                stringBuilder.Append(user.FirstName);
+                stringBuilder.Append(_user.FirstName);
 
             stringBuilder.Append("! ! Wellcome to bot.");
             return stringBuilder.ToString();

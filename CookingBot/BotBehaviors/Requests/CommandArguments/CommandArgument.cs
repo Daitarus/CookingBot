@@ -1,5 +1,5 @@
 ﻿using CookingBot.DataBase.Entities;
-using LibraryBot.DataBase;
+using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.CommandArguments
+namespace CookingBot.BotBehaviors.Requests.CommandArguments
 {
     internal abstract class CommandArgument : UserRequest
     {
@@ -19,7 +19,7 @@ namespace LibraryBot.BotBehaviors.Requests.CommandArguments
 
             this.message = message;
             this.mainDirectoryInfo = mainDirectoryInfo;
-            assignableUserState = UserState.Initial;
+            _assignableUserState = UserState.Initial;
         }
     }
 }

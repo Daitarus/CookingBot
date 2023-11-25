@@ -1,6 +1,6 @@
 ﻿using CookingBot.DataBase.Entities;
-using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.DataBase;
+using CookingBot.BotBehaviors.Responses;
+using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.Commands
+namespace CookingBot.BotBehaviors.Requests.Commands
 {
     internal class AddDocumentCommand : UserRequest
     {
@@ -16,7 +16,7 @@ namespace LibraryBot.BotBehaviors.Requests.Commands
 
         public AddDocumentCommand(CookingBotDB db, CookingBot.DataBase.Entities.User user) : base(db, user) 
         {
-            assignableUserState = UserState.AddDocument;
+            _assignableUserState = UserState.AddDocument;
         }
 
         public override IResponse CreateResponse()

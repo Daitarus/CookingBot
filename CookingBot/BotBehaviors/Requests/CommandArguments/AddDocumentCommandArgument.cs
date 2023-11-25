@@ -1,6 +1,6 @@
 ﻿using CookingBot.DataBase.Entities;
-using LibraryBot.BotBehaviors.Responses;
-using LibraryBot.DataBase;
+using CookingBot.BotBehaviors.Responses;
+using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace LibraryBot.BotBehaviors.Requests.CommandArguments
+namespace CookingBot.BotBehaviors.Requests.CommandArguments
 {
     internal class AddDocumentCommandArgument : CommandArgument
     {
