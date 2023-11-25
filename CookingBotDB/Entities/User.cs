@@ -57,10 +57,9 @@ namespace CookingBotDB.Entities
     public enum UserState
     {
         Initial = 0,
-        AddDocument = 1,
-        DeleteDocument = 2,
-        AddFolder = 3,
-        DeleteFolder = 4,
-        GetDocument = 5
+        AddRecipe = 1,
+        DeleteRecipe = 2,
+        UpdateRecipe = 3,
+        GetRecipe = 4
     }
 }
