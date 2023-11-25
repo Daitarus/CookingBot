@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using Microsoft.Extensions.Logging;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramService.Interfaces;
@@ -8,10 +9,12 @@ namespace TelegramService
     public sealed class BotHandlers : ITelegramBotHandlers
     {
         private IBotBehavior _botBehavior;
+        private ILogger _logger;
 
-        public BotHandlers(IBotBehavior botBehavior)
+        public BotHandlers(IBotBehavior botBehavior, ILogger logger)
         {
             _botBehavior = botBehavior;
+            _logger = logger;
         }
 
         public async Task HandleUpdateAsync(ITelegramBotClient client, Update update, CancellationToken cancellationToken)

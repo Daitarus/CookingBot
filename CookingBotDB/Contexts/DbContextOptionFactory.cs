@@ -5,6 +5,10 @@ namespace CookingBotDB.Contexts
 {
     public static class DbContextOptionFactory
     {
+        public static DbContextOptions<MainContext> Create(DbInitOption dbInitOption, TimeSpan commandTimeout, ILogger? logger = null)
+        {
+            return Create(dbInitOption.ConnectionString, dbInitOption.DbType, commandTimeout, logger);
+        }
         public static DbContextOptions<MainContext> Create(string connectionString, DatabaseType dbType, TimeSpan commandTimeout, ILogger? logger = null)
         {
             var dbContextOptionBuilder = new DbContextOptionsBuilder<MainContext>();
