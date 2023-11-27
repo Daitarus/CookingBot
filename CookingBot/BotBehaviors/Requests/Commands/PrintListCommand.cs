@@ -1,4 +1,5 @@
-﻿using CookingBot.BotBehaviors.Responses;
+﻿using CookingBot.BotBehaviors.Requests.Base;
+using CookingBot.BotBehaviors.Responses;
 using CookingBot.DataBase;
 using System;
 using System.Collections.Generic;

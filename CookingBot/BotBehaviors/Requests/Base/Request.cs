@@ -1,11 +1,11 @@
 ﻿using CookingBot.BotBehaviors.Requests.Interfaces;
 using CookingBot.BotBehaviors.Responses;
 
-namespace CookingBot.BotBehaviors.Requests
+namespace CookingBot.BotBehaviors.Requests.Base
 {
     public class Request : IRequest
     {
-        public void Execute() { }
+        public virtual void Execute() { }
 
         public virtual IResponse CreateResponse()
         {

@@ -3,9 +3,9 @@ using CookingBot.BotBehaviors.Responses;
 using CookingBotDB.Contexts;
 using CookingBotDB.Entities;
 
-namespace CookingBot.BotBehaviors.Requests
+namespace CookingBot.BotBehaviors.Requests.Base
 {
-    public class UserRequest : IRequest
+    public class UserRequest : Request
     {
         const UserState _assignableUserState = UserState.Initial;
 
@@ -14,9 +14,9 @@ namespace CookingBot.BotBehaviors.Requests
 
         public UserRequest(DbContextFactory dbContextFacoty, User user)
         {
-            if(dbContextFacoty == null) 
+            if (dbContextFacoty == null)
                 throw new ArgumentNullException(nameof(dbContextFacoty));
-            if (user == null) 
+            if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
             _dbContextFacoty = dbContextFacoty;
@@ -25,19 +25,17 @@ namespace CookingBot.BotBehaviors.Requests
             _user.State = _assignableUserState;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             using (var context = _dbContextFacoty.Create())
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
-
                 user = _user;
-
                 context.SaveChanges();
             }
         }
 
-        public IResponse CreateResponse()
+        public override IResponse CreateResponse()
         {
             return new Response("Sorry, but this request is not defined.");
         }

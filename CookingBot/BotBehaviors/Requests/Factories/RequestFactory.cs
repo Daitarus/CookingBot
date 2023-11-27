@@ -1,4 +1,5 @@
-﻿using CookingBot.BotBehaviors.Requests.CommandArguments;
+﻿using CookingBot.BotBehaviors.Requests.Base;
+using CookingBot.BotBehaviors.Requests.CommandArguments;
 using CookingBot.BotBehaviors.Requests.Commands;
 using CookingBot.BotBehaviors.Requests.Interfaces;
 using CookingBotDB.Contexts;
@@ -17,7 +18,7 @@ namespace CookingBot.BotBehaviors.Requests.Factories
 
         public IRequest Create(Message message, CookingBot.DataBase.Entities.User? user)
         {
-            IRequest request = new Request();
+            IRequest request = new UndefinedRequest();
             if (user != null)
             {
                 request = DesignUserRequest(message, user);

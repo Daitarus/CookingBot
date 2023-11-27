@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
+using CookingBot.BotBehaviors.Requests.Base;
 
 namespace CookingBot.BotBehaviors.Requests.Commands
 {
