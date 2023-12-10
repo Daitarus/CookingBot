@@ -1,15 +1,14 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.InputFiles;
 
 namespace CookingBot.BotBehaviors.Responses
 {
     public class Response : IResponse
     {
         public string? Text { get; }
-        public InputOnlineFile? File { get; }
+        public InputFile? File { get; }
 
-        public Response(string? text = null, InputOnlineFile? file = null)
+        public Response(string? text = null, InputFile? file = null)
         {
             Text = text;
             File = file;
