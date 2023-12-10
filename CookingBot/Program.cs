@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using CookingBot.Settings;
 using CookingBotDB.Contexts;
+using TelegramService;
+using TelegramService.Interfaces;
 
 namespace CookingBot
 {
@@ -11,14 +13,15 @@ namespace CookingBot
         {
             var config = GetConfiguration();
             var appsetting = config.Get<Appsetting>();
+            if(appsetting == null) throw new NullReferenceException(nameof(appsetting));
 
             var dbContextOption = DbContextOptionFactory.Create(appsetting.DbInitOption, appsetting.CommanTimeout);
             var dbContextFactory = new DbContextFactory(dbContextOption);
 
-            TelegramBot bot = new TelegramBot(botToken);
+            TelegramBot bot = new TelegramBot(appsetting.BotToken);
 
-            IBotBehavior mainBehavior = new BotBehavior(bot.getBotClient(), db, mainDirectoryInfo);
-            ITelegramBotHandles telegramBotHandles = new BotHandles(mainBehavior);
+            IBotBehavior mainBehavior = new BotBehavior(bot.TelegramBotClient, dbContextFactory);
+            ITelegramBotHandlers telegramBotHandles = new BotHandlers(mainBehavior);
 
             bot.Start(telegramBotHandles, MainServerCycle.StopCondition);
         }
@@ -26,8 +29,8 @@ namespace CookingBot
         private static IConfigurationRoot GetConfiguration()
         {
             return new ConfigurationBuilder()
-              .AddJsonFile("appsettings.dev", true)
-              .AddJsonFile("appsettings.json")
+              .AddJsonFile("appsetting.dev", true)
+              .AddJsonFile("appsetting.json")
               .Build();
         }
     }
