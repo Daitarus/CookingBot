@@ -9,9 +9,9 @@ namespace TelegramService
     public sealed class BotHandlers : ITelegramBotHandlers
     {
         private IBotBehavior _botBehavior;
-        private ILogger _logger;
+        private ILogger? _logger;
 
-        public BotHandlers(IBotBehavior botBehavior, ILogger logger)
+        public BotHandlers(IBotBehavior botBehavior, ILogger? logger = null)
         {
             _botBehavior = botBehavior;
             _logger = logger;
