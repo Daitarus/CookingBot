@@ -1,13 +1,13 @@
 ﻿using CookingBot.BotBehaviors.Requests.Interfaces;
 using CookingBot.BotBehaviors.Responses;
 
-namespace CookingBot.BotBehaviors.Requests.Base
+namespace CookingBot.BotBehaviors.Requests.Undefined
 {
     public class Request : IRequest
     {
-        public virtual void Execute() { }
+        public void Execute() { }
 
-        public virtual IResponse CreateResponse()
+        public IResponse CreateResponse()
         {
             return new Response("Sorry, but this request is not defined.");
         }
