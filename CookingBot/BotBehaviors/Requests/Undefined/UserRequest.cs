@@ -1,29 +1,32 @@
-﻿using CookingBot.BotBehaviors.Requests.Interfaces;
-using CookingBot.BotBehaviors.Responses;
-using CookingBotDB.Contexts;
+﻿using CookingBotDB.Contexts;
 using CookingBotDB.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace CookingBot.BotBehaviors.Requests.Undefined
 {
-    public class UserRequest : IRequest
+    public class UserRequest : Request
     {
-        private const UserState _assignableUserState = UserState.Initial;
+        protected UserState _assignableUserState;
 
-        private DbContextFactory _dbContextFacoty;
-        private User _user;
+        protected DbContextFactory _dbContextFacoty;
+        protected User _user;
+        protected ILogger? _logger;
 
-        public UserRequest(DbContextFactory dbContextFacoty, User user)
+        public UserRequest(DbContextFactory dbContextFacoty, User user, ILogger? logger = null)
         {
             if (dbContextFacoty == null)
                 throw new ArgumentNullException(nameof(dbContextFacoty));
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
+            _assignableUserState = UserState.Initial;
+
             _dbContextFacoty = dbContextFacoty;
             _user = user;
+            _logger = logger;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             _user.State = _assignableUserState;
 
@@ -32,12 +35,9 @@ namespace CookingBot.BotBehaviors.Requests.Undefined
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
                 user = _user;
                 context.SaveChanges();
-            }
-        }
 
-        public IResponse CreateResponse()
-        {
-            return new Response("Sorry, but this request is not defined.");
+                _isExecuted = true;
+            }
         }
     }
 }

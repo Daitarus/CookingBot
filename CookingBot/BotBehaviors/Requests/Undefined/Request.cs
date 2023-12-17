@@ -5,11 +5,24 @@ namespace CookingBot.BotBehaviors.Requests.Undefined
 {
     public class Request : IRequest
     {
-        public void Execute() { }
+        protected bool _isExecuted = false;
 
-        public IResponse CreateResponse()
+        public virtual void Execute() 
         {
-            return new Response("Sorry, but this request is not defined.");
+            _isExecuted = true;
+        }
+
+        //TODO Get ResponseText from file
+        public virtual IResponse CreateResponse()
+        {
+            if (_isExecuted)
+            {
+                return new Response("Sorry, but this request is not defined.");
+            }
+            else
+            {
+                return new Response("Sorry, but this request is not executed.");
+            }
         }
     }
 }

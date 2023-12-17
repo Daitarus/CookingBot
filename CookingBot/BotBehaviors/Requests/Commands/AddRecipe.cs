@@ -1,56 +1,31 @@
 ﻿using CookingBot.BotBehaviors.Responses;
-using System.Text;
-using CookingBot.BotBehaviors.Requests.Interfaces;
 using CookingBotDB.Entities;
 using CookingBotDB.Contexts;
+using CookingBot.BotBehaviors.Requests.Undefined;
+using Microsoft.Extensions.Logging;
 
 namespace CookingBot.BotBehaviors.Requests.Commands
 {
-    internal class AddRecipe : IRequest
+    public class AddRecipe : UserRequest
     {
         public const string CommandValue = "/add_recipe";
 
-        private const UserState _assignableUserState = UserState.AddRecipe;
-
-        private DbContextFactory _dbContextFacoty;
-        private User _user;
-
-        public AddRecipe(DbContextFactory dbContextFacoty, User user)
+        public AddRecipe(DbContextFactory dbContextFacoty, User user, ILogger? logger = null) : base(dbContextFacoty, user, logger) 
         {
-            if (dbContextFacoty == null)
-                throw new ArgumentNullException(nameof(dbContextFacoty));
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-
-            _dbContextFacoty = dbContextFacoty;
-            _user = user;
-        }
-
-        public void Execute()
-        {
-            _user.State = _assignableUserState;
-
-            using (var context = _dbContextFacoty.Create())
-            {
-                var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
-                user = _user;
-                context.SaveChanges();
-            }
-        }
-
-        public IResponse CreateResponse()
-        {
-            return new Response(CreateResponseText());
+            _assignableUserState = UserState.AddRecipe;
         }
 
         //TODO Get ResponseText from file
-        private string CreateResponseText()
+        public override IResponse CreateResponse()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.Append("Отправте имя рецепта и сам рецепт текстом с следующий строки или текстовым файлом.\n");
-
-            return stringBuilder.ToString();
+            if (_isExecuted)
+            {
+                return new Response("Отправте имя рецепта и сам рецепт текстом с следующий строки или текстовым файлом.");
+            }
+            else
+            {
+                return new Response("Sorry, but this request is not executed.");
+            }
         }
     }
 }
