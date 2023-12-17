@@ -24,9 +24,10 @@ namespace CookingBot.BotBehaviors.Requests.Commands
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
                 user = _user;
-                context.SaveChanges();
 
                 _userRecipes = context.Recipes.Where(recipe => recipe.UserId == user.Id).ToList();
+
+                context.SaveChanges();
 
                 _isExecuted = true;
             }
