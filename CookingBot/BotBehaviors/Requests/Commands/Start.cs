@@ -1,49 +1,33 @@
-﻿using CookingBot.BotBehaviors.Requests.Interfaces;
+﻿using CookingBot.BotBehaviors.Requests.Undefined;
 using CookingBot.BotBehaviors.Responses;
 using CookingBotDB.Contexts;
 using CookingBotDB.Entities;
+using Microsoft.Extensions.Logging;
 using System.Text;
 
 namespace CookingBot.BotBehaviors.Requests.Commands
 {
-    internal class Start : IRequest
+    internal class Start : UserRequest
     {
         public const string CommandValue = "/start";
 
-        private const UserState _assignableUserState = UserState.Initial;
-
-        private DbContextFactory _dbContextFacoty;
-        private User _user;
-
-        public Start(DbContextFactory dbContextFacoty, User user)
+        public Start(DbContextFactory dbContextFacoty, User user, ILogger? logger = null) : base(dbContextFacoty, user, logger)
         {
-            if (dbContextFacoty == null)
-                throw new ArgumentNullException(nameof(dbContextFacoty));
-            if (user == null)
-                throw new ArgumentNullException(nameof(user));
-
-            _dbContextFacoty = dbContextFacoty;
-            _user = user;
-        }
-
-        public void Execute()
-        {
-            _user.State = _assignableUserState;
-
-            using (var context = _dbContextFacoty.Create())
-            {
-                var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
-                user = _user;
-                context.SaveChanges();
-            }
-        }
-
-        public IResponse CreateResponse()
-        {
-            return new Response(CreateResponseText());
+            _assignableUserState = UserState.Initial;
         }
 
         //TODO Get ResponseText from file
+        public override IResponse CreateResponse()
+        {
+            if (_isExecuted)
+            {
+                return new Response(CreateResponseText());
+            }
+            else
+            {
+                return new Response("Sorry, but this request is not executed.");
+            }
+        }
         private string CreateResponseText()
         {
             string userName = !string.IsNullOrEmpty(_user.UserName) ? _user.UserName : _user.FirstName;

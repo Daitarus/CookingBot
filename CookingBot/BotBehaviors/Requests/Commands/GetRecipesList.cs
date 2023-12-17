@@ -20,6 +20,8 @@ namespace CookingBot.BotBehaviors.Requests.Commands
 
         public override void Execute()
         {
+            _user.State = _assignableUserState;
+
             using (var context = _dbContextFacoty.Create())
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
