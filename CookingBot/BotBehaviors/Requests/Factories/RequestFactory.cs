@@ -1,7 +1,7 @@
-﻿using CookingBot.BotBehaviors.Requests.Base;
-using CookingBot.BotBehaviors.Requests.CommandArguments;
+﻿using CookingBot.BotBehaviors.Requests.CommandArguments;
 using CookingBot.BotBehaviors.Requests.Commands;
 using CookingBot.BotBehaviors.Requests.Interfaces;
+using CookingBot.BotBehaviors.Requests.Undefined;
 using CookingBotDB.Contexts;
 using Telegram.Bot.Types;
 
@@ -32,7 +32,7 @@ namespace CookingBot.BotBehaviors.Requests.Factories
 
             return message.Text switch
             {
-                AddDocumentCommand.commandValue => new AddDocumentCommand(db, user),
+                AddRecipe.CommandValue => new AddDocumentCommand(db, user),
                 AddFolderCommand.commandValue => new AddFolderCommand(db, user),
                 DeleteDocumentCommand.commandValue => new DeleteDocumentCommand(db, user),
                 DeleteFolderCommand.commandValue => new DeleteFolderCommand(db, user),
