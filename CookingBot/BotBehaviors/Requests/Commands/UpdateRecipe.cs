@@ -12,7 +12,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands
 
         public UpdateRecipe(DbContextFactory dbContextFacoty, User user, ILogger? logger = null) : base(dbContextFacoty, user, logger)
         {
-            _assignableUserState = UserState.UpdateRecipe;
+            _assignableUserState = UserState.UpdateRecipe_Number;
         }
 
         //TODO Get ResponseText from file
