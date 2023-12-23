@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CookingBot.BotBehaviors.Requests.Commands
 {
-    internal class Start : UserRequest
+    public class Start : UserRequest
     {
         public const string CommandValue = "/start";
 
@@ -28,6 +28,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands
                 return new Response("Sorry, but this request is not executed.");
             }
         }
+
         private string CreateResponseText()
         {
             string userName = !string.IsNullOrEmpty(_user.UserName) ? _user.UserName : _user.FirstName;
