@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BotBehaviors\Requests\CommandArguments\" />
     <Folder Include="BotBehaviors\Requests\Factories\" />
   </ItemGroup>
 

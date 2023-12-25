@@ -12,7 +12,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands
 
         public AddRecipe(DbContextFactory dbContextFacoty, User user, ILogger? logger = null) : base(dbContextFacoty, user, logger) 
         {
-            _assignableUserState = UserState.AddRecipe;
+            _assignableUserState = UserState.AddRecipe_Name;
         }
 
         //TODO Get ResponseText from file
@@ -20,7 +20,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands
         {
             if (_isExecuted)
             {
-                return new Response("Отправте имя рецепта и сам рецепт текстом с следующий строки или текстовым файлом.");
+                return new Response("Отправте имя рецепта нового рецепта.");
             }
             else
             {
