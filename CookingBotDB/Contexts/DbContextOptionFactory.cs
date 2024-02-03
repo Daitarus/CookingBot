@@ -35,12 +35,10 @@ namespace CookingBotDB.Contexts
 
             if (logger != null)
             {
-                //TODO add logger to DB
-
-                //dbContextOptionBuilder.UseLoggerFactory(LoggerFactory.Create(builder =>
-                //{
-                //    builder.AddProvider(new PhxDBLoggerProvider(logger));
-                //}));
+                dbContextOptionBuilder.UseLoggerFactory(LoggerFactory.Create(builder =>
+                {
+                    builder.AddProvider(new DBLoggerProvider(logger));
+                }));
             }
 
             return dbContextOptionBuilder.Options;
