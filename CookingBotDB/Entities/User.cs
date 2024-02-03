@@ -58,7 +58,7 @@ namespace CookingBotDB.Entities
     {
         Initial = 0,
         AddRecipe_Name = 1,
-        AddRecipe = 2,
+        AddRecipe_Content = 2,
         DeleteRecipe = 3,
         UpdateRecipe_Number = 4,
         UpdateRecipe = 5,

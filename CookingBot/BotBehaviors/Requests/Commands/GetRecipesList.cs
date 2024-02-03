@@ -22,7 +22,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands
         {
             _user.State = _assignableUserState;
 
-            using (var context = _dbContextFacoty.Create())
+            using (var context = _contextFactory.Create())
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
                 user = _user;

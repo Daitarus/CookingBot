@@ -8,12 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\AddDocumentCommandArgument.cs" />
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\AddFolderCommandArgument.cs" />
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\CommandArgument.cs" />
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\DeleteDocumentCommandArgument.cs" />
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\DeleteFolderCommandArgument.cs" />
-    <Compile Remove="BotBehaviors\Requests\CommandArguments\GetDocumentCommandArgument.cs" />
     <Compile Remove="BotBehaviors\Requests\Factories\RequestFactory.cs" />
   </ItemGroup>
 
