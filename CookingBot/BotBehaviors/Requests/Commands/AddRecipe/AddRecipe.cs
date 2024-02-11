@@ -53,13 +53,11 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
 
             if(IsMessageValid(_message))
             {
+                _isExecuted = ExecuteThisRequest();
+
                 if (IsMessageForNextCommand(_message))
                 {
                     _isExecuted = ExecuteNestedRequest();
-                }
-                else
-                {
-                    _isExecuted = ExecuteThisRequest();
                 }
             }
             else
@@ -102,21 +100,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
 
         private bool IsMessageForNextCommand(Telegram.Bot.Types.Message message)
         {
-            if(!string.IsNullOrEmpty(message.Text))
-                return message.Text.Length > CommandValue.Length;
-
-            return false;
-        }
-
-        private Telegram.Bot.Types.Message UpdateMessageWithoutCommandValue(Telegram.Bot.Types.Message message)
-        {
-            var messageTextBuilder = new StringBuilder(message.Text);
-
-            messageTextBuilder.Remove(0, CommandValue.Length);
-
-            message.Text = messageTextBuilder.ToString();
-
-            return message;
+            return message.Text.Length > CommandValue.Length;
         }
 
         private bool ExecuteNestedRequest()
@@ -146,6 +130,17 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
             }
 
             return false;
+        }
+
+        private Telegram.Bot.Types.Message UpdateMessageWithoutCommandValue(Telegram.Bot.Types.Message message)
+        {
+            var messageTextBuilder = new StringBuilder(message.Text);
+
+            messageTextBuilder.Remove(0, CommandValue.Length);
+
+            message.Text = messageTextBuilder.ToString();
+
+            return message;
         }
 
         private bool TryCreateOrUpdateUserIntoDB()
