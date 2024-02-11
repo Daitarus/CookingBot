@@ -4,7 +4,7 @@ namespace CookingBot.BotBehaviors.Requests.Interfaces
 {
     public interface IRequest
     {
-        public void Execute();
+        public bool TryExecute();
         public IResponse CreateResponse();
     }
 }

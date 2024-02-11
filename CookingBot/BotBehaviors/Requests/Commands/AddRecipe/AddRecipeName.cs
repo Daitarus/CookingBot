@@ -34,7 +34,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
             _logger = logger;
         }
 
-        public void Execute()
+        public bool TryExecute()
         {
             CreateOrUpdateUserIntoDB();
 

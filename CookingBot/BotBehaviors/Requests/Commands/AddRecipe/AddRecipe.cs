@@ -3,17 +3,29 @@ using CookingBot.BotBehaviors.Responses;
 using CookingBotDB.Contexts;
 using CookingBotDB.Entities;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
 {
     public class AddRecipe : IRequest
     {
+        public const string CommandValue = "/add_recipe";
+
+
         private DbContextFactory _contextFactory;
+
         private User _user;
-        private UserState _assignableUserState;
+
+        private const UserState _assignableUserState = UserState.AddRecipe_Name;
+
         private Telegram.Bot.Types.Message _message;
+
         private ILogger? _logger;
+
         private bool _isExecuted;
+
+        private IResponse? _nestedResponse = null;
+
 
         public AddRecipe(DbContextFactory contextFactory, User user, Telegram.Bot.Types.Message message, ILogger? logger = null)
         {
@@ -24,47 +36,136 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
             if (_message == null)
                 throw new ArgumentNullException(nameof(message));
 
-            _assignableUserState = UserState.AddRecipe_Name;
-
             _contextFactory = contextFactory;
             _user = user;
             _message = message;
             _logger = logger;
         }
 
-        public void Execute()
+
+        public bool TryExecute()
         {
-            CreateOrUpdateUserIntoDB();
-
-            using (var context = _contextFactory.Create())
+            if(_isExecuted)
             {
-                var user = context.Users.First(u => u.Id == _user.Id);
-                user.State = _assignableUserState;
-                context.SaveChanges();
-
-                _isExecuted = true;
+                _logger?.LogWarning($"AddRecipe command: Command has been executed previously");
+                return false;
             }
+
+            if(IsMessageValid(_message))
+            {
+                if (IsMessageForNextCommand(_message))
+                {
+                    _isExecuted = ExecuteNestedRequest();
+                }
+                else
+                {
+                    _isExecuted = ExecuteThisRequest();
+                }
+            }
+            else
+            {
+                _logger?.LogWarning($"AddRecipe command: Command is not valid");
+            }
+
+            return _isExecuted;
         }
 
         public IResponse CreateResponse()
         {
+            if (_nestedResponse != null)
+            {
+                return _nestedResponse;
+            }
+
             if (_isExecuted)
             {
-                return new Response("Отправте имя рецепта, который хотите добавить.");
+                return new Response("Отправте уникальное имя для рецепта, который хотите добавить.");
             }
             else
             {
-                return new Response("Произошла ошибка!");
+                return new Response($"Произошла ошибка при выполнении команды!");
             }
         }
 
-        private void CreateOrUpdateUserIntoDB()
+
+        private bool IsMessageValid(Telegram.Bot.Types.Message message)
+        {
+            if (!string.IsNullOrEmpty(message.Text))
+            {
+                var probableCommandValue = message.Text.Substring(0, CommandValue.Length);
+
+                return CommandValue.Equals(probableCommandValue);
+            }
+
+            return false;
+        }
+
+        private bool IsMessageForNextCommand(Telegram.Bot.Types.Message message)
+        {
+            if(!string.IsNullOrEmpty(message.Text))
+                return message.Text.Length > CommandValue.Length;
+
+            return false;
+        }
+
+        private Telegram.Bot.Types.Message UpdateMessageWithoutCommandValue(Telegram.Bot.Types.Message message)
+        {
+            var messageTextBuilder = new StringBuilder(message.Text);
+
+            messageTextBuilder.Remove(0, CommandValue.Length);
+
+            message.Text = messageTextBuilder.ToString();
+
+            return message;
+        }
+
+        private bool ExecuteNestedRequest()
+        {
+            _message = UpdateMessageWithoutCommandValue(_message);
+
+            var nestedRequest = new AddRecipeName(_contextFactory, _user, _message, _logger);
+
+            var isExecuted = nestedRequest.TryExecute();
+            _nestedResponse = nestedRequest.CreateResponse();
+
+            return isExecuted;
+        }
+
+        private bool ExecuteThisRequest()
+        {
+            if (TryCreateOrUpdateUserIntoDB())
+            {
+                using (var context = _contextFactory.Create())
+                {
+                    var user = context.Users.First(u => u.Id == _user.Id);
+                    user.State = _assignableUserState;
+                    var updatedQuantity = context.SaveChanges();
+
+                    return updatedQuantity > 0;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryCreateOrUpdateUserIntoDB()
         {
             using (var context = _contextFactory.Create())
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
-                user = _user;
-                context.SaveChanges();
+
+                if (user == default)
+                {
+                    context.Users.Add(_user);
+                }
+                else
+                {
+                    user = _user;
+                }
+
+                var updatedQuantity = context.SaveChanges();
+
+                return updatedQuantity > 0;
             }
         }
     }
