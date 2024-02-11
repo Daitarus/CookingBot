@@ -10,7 +10,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
     {
         private DbContextFactory _contextFactory;
         private User _user;
-        private UserState _assignableUserState;
+        private UserState _assignableUserState = UserState.Initial;
         private Telegram.Bot.Types.Message _message;
         private ILogger? _logger;
         private bool _isExecuted;
@@ -23,8 +23,6 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
                 throw new ArgumentNullException(nameof(user));
             if (_message == null)
                 throw new ArgumentNullException(nameof(message));
-
-            _assignableUserState = UserState.AddRecipe_Name;
 
             _contextFactory = contextFactory;
             _user = user;

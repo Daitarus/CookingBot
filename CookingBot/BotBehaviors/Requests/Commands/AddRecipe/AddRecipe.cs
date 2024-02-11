@@ -2,6 +2,7 @@
 using CookingBot.BotBehaviors.Responses;
 using CookingBotDB.Contexts;
 using CookingBotDB.Entities;
+using CookingBotDB.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Text;
 
@@ -26,6 +27,8 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
 
         private IResponse? _nestedResponse = null;
 
+        private CookingBotRepository _repository;
+
 
         public AddRecipe(DbContextFactory contextFactory, User user, Telegram.Bot.Types.Message message, ILogger? logger = null)
         {
@@ -40,6 +43,7 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
             _user = user;
             _message = message;
             _logger = logger;
+            _repository = new CookingBotRepository(contextFactory);
         }
 
 
@@ -117,16 +121,9 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
 
         private bool ExecuteThisRequest()
         {
-            if (TryCreateOrUpdateUserIntoDB())
+            if (_repository.TryCreateOrUpdateUser(_user))
             {
-                using (var context = _contextFactory.Create())
-                {
-                    var user = context.Users.First(u => u.Id == _user.Id);
-                    user.State = _assignableUserState;
-                    var updatedQuantity = context.SaveChanges();
-
-                    return updatedQuantity > 0;
-                }
+                return _repository.TryUpdateUserState(_user.Id, _assignableUserState);
             }
 
             return false;
@@ -141,27 +138,6 @@ namespace CookingBot.BotBehaviors.Requests.Commands.AddRecipe
             message.Text = messageTextBuilder.ToString();
 
             return message;
-        }
-
-        private bool TryCreateOrUpdateUserIntoDB()
-        {
-            using (var context = _contextFactory.Create())
-            {
-                var user = context.Users.FirstOrDefault(u => u.Id == _user.Id);
-
-                if (user == default)
-                {
-                    context.Users.Add(_user);
-                }
-                else
-                {
-                    user = _user;
-                }
-
-                var updatedQuantity = context.SaveChanges();
-
-                return updatedQuantity > 0;
-            }
         }
     }
 }
