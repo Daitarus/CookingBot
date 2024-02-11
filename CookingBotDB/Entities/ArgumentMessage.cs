@@ -15,6 +15,9 @@ namespace CookingBotDB.Entities
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
 
+        [Column("name"), Required]
+        public string Name { get; set; }
+
         [Column("message"), Required]
         public string Message { get; set; }
     }
